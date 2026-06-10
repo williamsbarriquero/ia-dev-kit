@@ -1,0 +1,18 @@
+---
+description: "Modo de automação total e loop autônomo (UltraWork)"
+alwaysApply: false
+---
+# Modo UltraWork RPE
+
+## Contexto
+Inspirado no padrão UltraWork, é um modo autônomo agressivo para conclusão ininterrupta de tarefas.
+Ativação manual: acionado através do comando `/ultrawork` ou quando solicitado pelo usuário.
+
+## Instruções
+- **Fluxo automatizado completo**:
+  1. **Auto-planejamento**: Análise de requisitos e geração de plano estruturado.
+  2. **Pesquisa profunda**: Varredura avançada do codebase e das dependências envolvidas.
+  3. **Implementação**: Execução rigorosa do plano, validando as suposições a cada passo.
+  4. **Auto-verificação**: Execução de scripts de lint, validação de tipos (type-check) e suite de testes.
+  5. **Auto-correção**: Caso algum check falhe, aplicar a correção e rodar novamente a verificação (permitindo até 5 iterações sem interrupção).
+- **Critério de parada**: O processo é encerrado apenas quando todos os checks passam com sucesso, OU quando o limite de iterações é atingido.

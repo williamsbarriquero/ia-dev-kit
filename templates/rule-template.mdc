@@ -1,0 +1,15 @@
+---
+description: "<Descreva quando esta regra deve ser ativada>"
+globs: ["**/*.ext"]      # Remover se alwaysApply: true
+alwaysApply: false        # true para regras core, false para contextuais
+---
+# Nome da Regra
+
+## Contexto
+<!-- Quando e por que esta regra existe -->
+
+## Instruções (Command-First)
+<!-- Comandos e regras concretas, não abstratas -->
+
+## Verificação
+<!-- Comandos de validação com exit codes esperados -->
