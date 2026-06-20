@@ -460,10 +460,7 @@ def run_sync(
 
     non_cursor = platform_set - {"cursor"}
     if non_cursor:
-        if "copilot" in non_cursor or "antigravity" in non_cursor:
-            sync_rules(root, target, non_cursor, dry_run)
-        if "claude" in non_cursor:
-            sync_rules(root, target, {"claude"}, dry_run)
+        sync_rules(root, target, non_cursor, dry_run)
 
     if non_cursor & {"copilot", "claude", "antigravity"}:
         sync_agents(root, target, non_cursor, dry_run)
@@ -493,23 +490,25 @@ def main() -> int:
     platforms = [p.strip() for p in args.platforms.split(",") if p.strip()]
     target = args.target.resolve()
     root = kit_root()
+    platform_set = set(platforms)
 
     if args.command == "all":
         run_sync(target, platforms, args.dry_run)
     elif args.command == "cursor":
-        sync_cursor(root, target, args.dry_run)
+        if "cursor" in platform_set:
+            sync_cursor(root, target, args.dry_run)
     elif args.command == "rules":
-        sync_rules(root, target, set(platforms) - {"cursor"}, args.dry_run)
+        sync_rules(root, target, platform_set - {"cursor"}, args.dry_run)
     elif args.command == "agents":
-        sync_agents(root, target, set(platforms) - {"cursor"}, args.dry_run)
+        sync_agents(root, target, platform_set - {"cursor"}, args.dry_run)
     elif args.command == "commands":
-        sync_commands(root, target, set(platforms) - {"cursor"}, args.dry_run)
+        sync_commands(root, target, platform_set - {"cursor"}, args.dry_run)
     elif args.command == "skills":
-        sync_skills(root, target, set(platforms) - {"cursor"}, args.dry_run)
+        sync_skills(root, target, platform_set - {"cursor"}, args.dry_run)
     elif args.command == "hooks":
-        sync_hooks(root, target, set(platforms) - {"cursor"}, args.dry_run)
+        sync_hooks(root, target, platform_set - {"cursor"}, args.dry_run)
     elif args.command == "mcp":
-        sync_mcp(root, target, set(platforms) - {"cursor"}, args.dry_run)
+        sync_mcp(root, target, platform_set - {"cursor"}, args.dry_run)
 
     return 0
 

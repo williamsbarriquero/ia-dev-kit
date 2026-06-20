@@ -52,6 +52,11 @@ for agent in .cursor/agents/*.md; do
     echo "❌ Campo readonly ausente em: $agent"
     ERRORS=$((ERRORS + 1))
   fi
+  model_line=$(grep -m1 "^model:" "$agent" || true)
+  if echo "$model_line" | grep -qE '\[|\]'; then
+    echo "❌ Campo model malformado em: $agent ($model_line)"
+    ERRORS=$((ERRORS + 1))
+  fi
 done
 
 # Skills: name = pasta pai
@@ -72,15 +77,38 @@ for cmd in .cursor/commands/*.md; do
   fi
 done
 
-# Referências Cursor-only obsoletas
-if grep -rq "core/004-interaction-standards" .cursor/agents templates 2>/dev/null; then
-  echo "❌ Referência obsoleta core/004-interaction-standards encontrada"
-  ERRORS=$((ERRORS + 1))
-fi
-if grep -rq "401-code-review" .cursor/commands 2>/dev/null; then
-  echo "❌ Referência obsoleta 401-code-review encontrada"
-  ERRORS=$((ERRORS + 1))
-fi
+# Referências editor-agnósticas no SSOT (ver authoring-guide.md)
+SSOT_CONTENT_DIRS=(".cursor/agents" ".cursor/commands" ".cursor/skills" ".cursor/rules" "templates")
+
+check_ssot_pattern() {
+  local pattern="$1"
+  local message="$2"
+  for dir in "${SSOT_CONTENT_DIRS[@]}"; do
+    if [ -d "$dir" ] && grep -rqE "$pattern" "$dir" 2>/dev/null; then
+      echo "❌ ${message}"
+      grep -rnE "$pattern" "$dir" 2>/dev/null | head -5
+      ERRORS=$((ERRORS + 1))
+      return 0
+    fi
+  done
+}
+
+check_ssot_pattern '\.cursor/rules/' 'Referência Cursor-only: use nome simples (ex: interaction-standards.mdc), não caminho .cursor/rules/'
+check_ssot_pattern 'rules/core/' 'Referência inválida: subdiretório rules/core/ não existe no SSOT'
+check_ssot_pattern '@[a-zA-Z0-9_-]+\.md' 'Menção @ exclusiva do Cursor encontrada (ex: @rpe-developer.md)'
+check_ssot_pattern '[0-9]{3}-[a-zA-Z0-9_-]+\.mdc' 'Referência com prefixo numérico obsoleto (ex: 401-code-review.mdc)'
+
+# Regras referenciadas em backticks devem existir em .cursor/rules/
+for dir in "${SSOT_CONTENT_DIRS[@]}"; do
+  [ -d "$dir" ] || continue
+  while IFS= read -r ref; do
+    [ -n "$ref" ] || continue
+    if [ ! -f ".cursor/rules/${ref}" ]; then
+      echo "❌ Regra referenciada não encontrada: ${ref}"
+      ERRORS=$((ERRORS + 1))
+    fi
+  done < <(grep -rohE '`[a-zA-Z0-9_-]+\.mdc`' "$dir" 2>/dev/null | tr -d '`' | sort -u)
+done
 
 if [ $ERRORS -gt 0 ]; then
   echo "⚠️ Foram encontrados $ERRORS erros na estrutura do Harness."

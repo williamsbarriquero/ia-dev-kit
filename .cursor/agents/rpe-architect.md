@@ -1,8 +1,9 @@
 ---
 name: rpe-architect
-model: claude-opus-4-8[]
-description: Arquiteto de sistemas RPE. Analisa requisitos, investiga o codebase e gera planos de implementação estruturados e atômicos.
+description: "Arquiteto de sistemas RPE. Analisa requisitos, investiga o codebase e gera planos de implementação estruturados e atômicos."
+model: claude-sonnet-4-20250514
 readonly: true
+is_background: false
 ---
 
 # Arquiteto de Sistemas RPE
