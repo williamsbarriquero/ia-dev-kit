@@ -5,6 +5,8 @@ alwaysApply: false        # true para regras core, false para contextuais
 ---
 # Nome da Regra
 
+> **Multi-IDE**: `globs` mapeia para `applyTo` (Copilot) e `paths` (Claude Code) na instalação.
+
 ## Contexto
 <!-- Quando e por que esta regra existe -->
 

@@ -1,20 +1,43 @@
 # RPE Harness — Agentic Dev Kit
 
-O **RPE Harness** é um kit de desenvolvimento de IA de nível corporativo projetado para o Cursor IDE (e compatível com outras IDEs via especificação [agents.md](./agents.md)). Ele fornece uma infraestrutura de orquestração determinística que encapsula modelos de linguagem, mitigando alucinações e garantindo que o código gerado siga os padrões de arquitetura, segurança e qualidade da RPE.
+O **RPE Harness** é um kit de desenvolvimento de IA de nível corporativo com **SSOT em `.cursor/`** e suporte multi-IDE via sync automático para Cursor, VS Code + GitHub Copilot, Claude Code e Antigravity. A baseline universal está em [agents.md](./agents.md).
 
 Inspirado nos conceitos avançados do **Oh My OpenAgent**, este harness implementa roteamento por intenção (IntentGate), persistência de sessão (Boulder System), ganchos de ciclo de vida em 3 camadas, prompts otimizados por modelo e automação de testes iterativa (UltraWork).
 
 ---
 
+## Suporte Multi-IDE
+
+| Editor | Flag de instalação | Artefatos gerados |
+|---|---|---|
+| Cursor | `--platforms=cursor` | `.cursor/` |
+| VS Code + Copilot | `--platforms=copilot` | `.github/copilot-instructions.md`, prompts, agents, skills, hooks |
+| Claude Code | `--platforms=claude` | `CLAUDE.md`, `.claude/rules/`, agents, skills |
+| Antigravity | `--platforms=antigravity` | `AGENTS.md`, `.agents/skills/`, workflows |
+| Time misto | `--platforms=cursor,copilot,claude,antigravity` | todos acima |
+
+Documentação: [multi-ide-quickstart.md](docs/multi-ide-quickstart.md) | [multi-ide-mapping.md](docs/multi-ide-mapping.md) | [authoring-guide.md](docs/authoring-guide.md)
+
+---
+
 ## 🚀 Quick Start
 
-A forma recomendada de instalar o RPE Harness em qualquer novo repositório alvo é executando o script de instalação automatizado fornecido na pasta `scripts/`:
-
 ```bash
+# Instalação completa (todas as plataformas)
 ./scripts/install.sh /caminho/para/seu/projeto/
+
+# Instalação seletiva
+./scripts/install.sh /caminho/para/seu/projeto/ --platforms=cursor
+./scripts/install.sh /caminho/para/seu/projeto/ --platforms=copilot,claude
+
+# Re-sync após atualização do kit
+./scripts/sync-platforms.sh /caminho/para/seu/projeto/ --platforms=copilot
+
+# Validação
+./scripts/validate.sh && ./scripts/validate-sync.sh
 ```
 
-O script criará a estrutura de diretórios necessária e copiará todas as regras modulares, agentes especialistas, comandos rápidos, hooks locais, skills e configurações de MCP para o seu projeto.
+O script gera artefatos específicos de cada editor a partir do SSOT `.cursor/` — não edite arquivos gerados manualmente no projeto alvo.
 
 ---
 
@@ -71,9 +94,14 @@ ai-dev-kit/
 │   │   └── ... (outras 9 skills de arquitetura, linguagens e QA)
 │   ├── hooks.json                   # Registro central de ganchos do Cursor
 │   └── mcp.json                     # Integração com APIs externas (Model Context Protocol)
-├── scripts/                         # Ferramentas de ciclo de vida (install.sh, validate.sh, update.sh)
+├── scripts/                         # Ferramentas de ciclo de vida (install.sh, sync-platforms.sh, validate.sh)
+│   ├── lib/                         # Motor de sync multi-IDE (rpe_sync.py + wrappers)
+│   ├── install.sh                   # Instalação seletiva por plataforma
+│   ├── sync-platforms.sh            # Orquestrador de sync
+│   ├── validate.sh                  # Validação do SSOT
+│   └── validate-sync.sh             # Validação de paridade multi-IDE
 ├── templates/                       # Templates padrão para criação de novos agentes, regras ou skills
-└── agents.md                        # Baseline universal para conformidade em multi-IDEs (Claude Code, Aider)
+└── agents.md                        # Baseline universal (gera AGENTS.md no projeto alvo)
 ```
 
 ---
@@ -83,10 +111,11 @@ ai-dev-kit/
 Para aprofundar seu conhecimento sobre o funcionamento e o ciclo de vida do harness, leia:
 
 1.  [Guia Completo do Desenvolvedor](docs/harness-guide.md) — O manual prático contendo todas as tabelas de agentes, comandos e comandos de execução.
-2.  [Pesquisa: Agentic Harness](docs/agentic-harness.md) — A base de fundamentação teórica de engenharia de contexto por trás deste harness.
+2.  [Quick Start Multi-IDE](docs/multi-ide-quickstart.md) — Instalação e equivalências por editor.
+3.  [Pesquisa: Agentic Harness](docs/agentic-harness.md) — A base de fundamentação teórica de engenharia de contexto por trás deste harness.
 
 ---
 
 ## 🛠️ Contribuindo
 
-Para adicionar novas regras, agentes ou skills a este kit de desenvolvimento, utilize sempre os padrões contidos na pasta `templates/` e lembre-se de rodar `./scripts/validate.sh` localmente antes de submeter suas alterações.
+Para adicionar novas regras, agentes ou skills a este kit de desenvolvimento, utilize sempre os padrões contidos na pasta `templates/` e lembre-se de rodar `./scripts/validate.sh && ./scripts/validate-sync.sh` localmente antes de submeter suas alterações.

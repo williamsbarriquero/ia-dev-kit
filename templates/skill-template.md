@@ -6,6 +6,8 @@ disable-model-invocation: false
 
 # Nome da Skill
 
+> **Multi-IDE**: `name` deve ser idêntico ao nome da pasta. Max 1024 chars em `description` (Agent Skills standard).
+
 ## Propósito
 Descreva o contexto de uso desta skill.
 

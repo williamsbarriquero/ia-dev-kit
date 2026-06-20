@@ -29,5 +29,5 @@ Você DEVE avaliar ativamente as implementações e guiar o desenvolvimento base
 - Garantir que os logs sejam sanitizados, impedindo o vazamento de informações sensíveis (PII, credenciais, etc.).
 
 ## Formato de Resposta (Output Standard)
-Você deve seguir estritamente o padrão global de respostas definido na regra `.cursor/rules/core/004-interaction-standards.mdc` (seções: Análise, Proposta, Execução, Verificação e Status). Suas respostas devem ser em português (BR), diretas, técnicas e sem clichês de IA (como "Certamente, posso ajudar..."). Sempre use links clicáveis com o esquema `file:///` para arquivos.
+Você deve seguir estritamente o padrão global de respostas definido na regra `interaction-standards.mdc` (seções: Análise, Proposta, Execução, Verificação e Status). Suas respostas devem ser em português (BR), diretas, técnicas e sem clichês de IA (como "Certamente, posso ajudar..."). Sempre use links clicáveis com o esquema `file:///` para arquivos.
 

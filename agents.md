@@ -7,21 +7,25 @@ Esta é a baseline universal para o repositório RPE, compatível com múltiplos
 O agente deve identificar a stack principal do projeto e executar as verificações correspondentes antes de considerar a tarefa concluída:
 
 ### Node.js / TypeScript
+
 * Linter validation: `npx eslint . --fix`
 * Formatting validation: `npx prettier --write .`
 * Type checking: `npx tsc --noEmit`
 * Test suite: `npm test`
 
 ### Go
+
 * Linter validation: `golangci-lint run --fix`
 * Formatting validation: `gofmt -w .`
 * Test suite: `go test ./...`
 
 ### Java
+
 * Build & Quality: `./gradlew spotlessApply` ou `./mvnw spotless:apply`
 * Test suite: `./gradlew test` ou `./mvnw test`
 
 ### RPE Harness / Shell Scripts
+
 * Harness Validation: `./scripts/validate.sh` (se presente)
 * Shell script lint: `shellcheck scripts/*.sh` (se disponível no ambiente)
 
@@ -41,12 +45,33 @@ Para garantir clareza, rastreabilidade e evitar poluição visual, todo agente d
 1. **Tom de Voz**: Profissional, técnico, direto e em Português (BR). Evite introduções e conclusões prolixas ou clichês (ex: *"Certamente, posso ajudar..."* ou *"Espero ter ajudado!"*).
 2. **Links de Arquivos**: Sempre utilize links markdown absolutos ou relativos com o esquema `file:///` para apontar para arquivos e trechos de código (ex: `[agents.md](file:///caminho/para/agents.md)`). Não envolva o texto do link com crase.
 3. **Template de Saída (Output Structure)**: Para tarefas complexas, divida sua resposta usando cabeçalhos de nível 2 na seguinte ordem:
-   - `## 🔍 Análise`: Diagnóstico do problema e constraints identificados.
-   - `## 🛠️ Proposta`: Arquivos que serão lidos, modificados, criados ou deletados.
-   - `## 💻 Execução`: Implementação real do código ou saída de comandos.
-   - `## ✅ Verificação`: Como a alteração foi validada localmente (testes, linters, etc.).
-   - `## 📌 Status e Próximos Passos`: O estado final e ações requeridas do usuário.
+   * `## 🔍 Análise`: Diagnóstico do problema e constraints identificados.
+   * `## 🛠️ Proposta`: Arquivos que serão lidos, modificados, criados ou deletados.
+   * `## 💻 Execução`: Implementação real do código ou saída de comandos.
+   * `## ✅ Verificação`: Como a alteração foi validada localmente (testes, linters, etc.).
+   * `## 📌 Status e Próximos Passos`: O estado final e ações requeridas do usuário.
+
+## Multi-IDE
+
+Este arquivo é a baseline universal reconhecida por Cursor, GitHub Copilot, Claude Code, Antigravity e outras ferramentas compatíveis com `AGENTS.md`.
+
+Na instalação do RPE Harness, o sync gera:
+
+| Editor | Artefatos principais |
+|---|---|
+| Cursor | `.cursor/` (cópia direta do SSOT) |
+| VS Code + Copilot | `.github/copilot-instructions.md`, `.github/instructions/`, `.github/prompts/`, `.github/agents/`, `.github/skills/` |
+| Claude Code | `CLAUDE.md`, `.claude/rules/`, `.claude/agents/`, `.claude/skills/` |
+| Antigravity | `AGENTS.md`, `.agents/skills/`, `.agents/workflows/`, `.agents/agents.md` |
+
+Documentação: [multi-ide-mapping.md](docs/multi-ide-mapping.md), [multi-ide-parity.md](docs/multi-ide-parity.md), [multi-ide-quickstart.md](docs/multi-ide-quickstart.md).
+
+Instalação seletiva:
+
+```bash
+./scripts/install.sh /path/to/project --platforms=cursor,copilot,claude,antigravity
+```
 
 ## Local Overrides
-Para configurações específicas da máquina local (como portas diferentes, flags de teste ou comandos customizados da stack), crie um arquivo `agents.override.md` na raiz do repositório. O arquivo de override será ignorado pelo git.
 
+Para configurações específicas da máquina local (como portas diferentes, flags de teste ou comandos customizados da stack), crie um arquivo `agents.override.md` na raiz do repositório. O arquivo de override será ignorado pelo git.

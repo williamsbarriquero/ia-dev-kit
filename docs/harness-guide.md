@@ -78,3 +78,25 @@ Os hooks (registrados em `.cursor/hooks.json` e codificados em `.cursor/hooks/`)
     *   `lint-on-save.sh`: Roda o linter e o formatador correspondente à stack do projeto pós-salvamento para garantir um código limpo constante.
 3.  **Continuations (Iteração)**:
     *   `grind-loop.ts`: Gerencia o fluxo de auto-correção UltraWork, mantendo o agente executando correções até que a flag `ALL_TESTS_PASSED: true` seja gravada com sucesso no arquivo `.cursor/scratchpad.md`.
+
+---
+
+## 5. Operação Multi-IDE
+
+O SSOT vive em `.cursor/` no ia-dev-kit. Na instalação, o sync gera artefatos por editor:
+
+| Recurso SSOT | Cursor | Copilot | Claude Code | Antigravity |
+|---|---|---|---|---|
+| Rules | `.cursor/rules/` | `copilot-instructions.md` + `instructions/` | `CLAUDE.md` + `.claude/rules/` | `AGENTS.md` |
+| Agents | `@rpe-*.md` | `.github/agents/*.agent.md` | `.claude/agents/` | `.agents/agents.md` |
+| Commands | `@command.md` | `/command` (prompts) | `/command` (skill manual) | `/command` (workflow) |
+| Skills | `.cursor/skills/` | `.github/skills/` | `.claude/skills/` | `.agents/skills/` |
+| Hooks | `hooks.json` | `.github/hooks/` | `.claude/settings.json` | parcial |
+
+Instalação seletiva:
+
+```bash
+./scripts/install.sh /projeto --platforms=cursor,copilot,claude,antigravity
+```
+
+Documentação completa: [multi-ide-quickstart.md](multi-ide-quickstart.md), [multi-ide-mapping.md](multi-ide-mapping.md), [multi-ide-parity.md](multi-ide-parity.md).
