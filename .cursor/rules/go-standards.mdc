@@ -1,0 +1,25 @@
+---
+description: "Padrões e convenções para código Go"
+globs: ["**/*.go"]
+alwaysApply: false
+---
+
+# Padrões Go RPE
+
+## Contexto
+
+Regras ativadas automaticamente ao editar arquivos `.go`. Complementa a skill `go-mastery`.
+
+## Instruções
+
+- Layout idiomático: `cmd/`, `internal/`, `pkg/` conforme escala do projeto.
+- Tratamento de erros explícito; nunca ignorar `err` com `_`.
+- Context para cancelamento e timeouts em operações I/O.
+- Concorrência segura com channels ou mutex; evitar race conditions.
+- Interfaces pequenas definidas pelo consumidor.
+
+## Verificação
+
+- `golangci-lint run --fix`
+- `gofmt -w .`
+- `go test ./...`

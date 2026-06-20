@@ -1,13 +1,15 @@
 ---
-description: "Convenções Git e Commits"
+description: "Convenções Git, commits, branches e PRs. Ativar ao criar commits, branches ou PRs."
 alwaysApply: false
 ---
 # Convenções Git RPE
 
 ## Contexto
+
 Aplicável ao criar commits, analisar PRs e gerenciar branches.
 
 ## Instruções
+
 - **Conventional Commits**: O uso é obrigatório no formato `type(scope): description`.
   - Types permitidos: `feat`, `fix`, `refactor`, `docs`, `test`, `chore`, `ci`, `perf`.
 - **Nomenclatura de Branch**: Seguir o padrão: `feature/TICKET-123-descricao`, `fix/TICKET-456-bug`, ou `chore/descricao`.

@@ -5,9 +5,11 @@ alwaysApply: true
 # Guardrails de Segurança RPE
 
 ## Contexto
+
 Regras essenciais para garantir a segurança da aplicação e do ambiente. Inspirado nos Guard Hooks do OmO.
 
 ## Instruções
+
 - **Proibições absolutas**: Hardcode de credenciais, `eval()`, `exec()` dinâmico, queries SQL sem parametrização.
 - **Validação obrigatória**: Todo input externo deve ser validado/sanitizado (ex: Zod/Joi).
 - **CORS e headers**: Configuração estrita e segura por ambiente.

@@ -1,27 +1,31 @@
 ---
 name: node-mastery
-description: Advanced Node.js ecosystem, event loop, and asynchronous patterns.
+description: Ecossistema Node.js avançado, event loop e padrões assíncronos.
 disable-model-invocation: true
 ---
 
 # Node.js Mastery
 
-## The Event Loop
-- **Non-blocking I/O**: Node.js is single-threaded but uses asynchronous I/O primitives. Never block the event loop with heavy CPU-bound tasks (e.g., synchronous file reads, complex cryptography, large JSON parsing).
-- **Worker Threads**: If you must perform CPU-intensive tasks, offload them to `worker_threads` or external services.
-- **Microtasks vs Macrotasks**: Understand the difference. Promises (microtasks) resolve before `setTimeout` or `setImmediate` (macrotasks) in the same phase.
+## Event Loop
 
-## Asynchronous Patterns
-- **Async/Await**: Always prefer `async/await` over raw Promises or callbacks for readability.
-- **Error Handling**: Always use `try/catch` within `async` functions. Unhandled promise rejections can crash the Node process in modern versions.
-- **Concurrency**: Use `Promise.all` to run independent asynchronous operations concurrently. Be cautious with unbounded concurrency; use libraries like `p-limit` if you need to process thousands of items.
+- **I/O não bloqueante**: Node.js é single-threaded, mas usa primitivas de I/O assíncrono. Nunca bloqueie o event loop com tarefas CPU-bound pesadas (ex.: leituras síncronas de arquivo, criptografia complexa, parsing de JSON grande).
+- **Worker Threads**: Se precisar executar tarefas intensivas em CPU, delegue-as a `worker_threads` ou serviços externos.
+- **Microtasks vs Macrotasks**: Entenda a diferença. Promises (microtasks) resolvem antes de `setTimeout` ou `setImmediate` (macrotasks) na mesma fase.
 
-## Memory Management
-- **Memory Leaks**: Node applications are long-running. Common leak sources include: global variables, unclosed database connections, lingering event listeners (e.g., `emitter.on` without `emitter.off`), and closures holding large scopes.
-- **Streams**: Use Streams to process large amounts of data (files, network requests) to avoid buffering everything in memory.
+## Padrões Assíncronos
 
-## Architecture & Ecosystem
-- **Modules**: Prefer ECMAScript Modules (ESM, `import`/`export`) over CommonJS (`require`) for new projects.
-- **Typescript**: Use TypeScript heavily. Strictly type your interfaces and avoid `any`.
-- **Frameworks**: Choose the right tool. Express/Fastify for APIs, NestJS for highly structured enterprise applications.
-- **Security**: Never trust user input. Use tools to check dependencies (`npm audit`). Implement proper logging, but avoid logging sensitive data.
+- **Async/Await**: Sempre prefira `async/await` a Promises cruas ou callbacks por legibilidade.
+- **Tratamento de erros**: Sempre use `try/catch` dentro de funções `async`. Rejeições de promise não tratadas podem derrubar o processo Node em versões modernas.
+- **Concorrência**: Use `Promise.all` para executar operações assíncronas independentes em paralelo. Cuidado com concorrência ilimitada; use bibliotecas como `p-limit` se precisar processar milhares de itens.
+
+## Gerenciamento de Memória
+
+- **Vazamentos de memória**: Aplicações Node são de longa duração. Fontes comuns incluem: variáveis globais, conexões de banco não fechadas, event listeners persistentes (ex.: `emitter.on` sem `emitter.off`) e closures retendo escopos grandes.
+- **Streams**: Use Streams para processar grandes volumes de dados (arquivos, requisições de rede) e evitar bufferizar tudo na memória.
+
+## Arquitetura e Ecossistema
+
+- **Módulos**: Prefira ECMAScript Modules (ESM, `import`/`export`) a CommonJS (`require`) em projetos novos.
+- **TypeScript**: Use TypeScript extensivamente. Tipagem estrita em interfaces e evite `any`.
+- **Frameworks**: Escolha a ferramenta certa. Express/Fastify para APIs, NestJS para aplicações enterprise altamente estruturadas.
+- **Segurança**: Nunca confie em input do usuário. Use ferramentas para verificar dependências (`npm audit`). Implemente logging adequado, mas evite registrar dados sensíveis.

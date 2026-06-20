@@ -1,28 +1,54 @@
 #!/bin/bash
+# Guard hook: protege arquivos críticos contra edição acidental
 
-# Guard hook: write-existing-file-guard
-# Lista de arquivos protegidos
-PROTECTED_FILES=(".env" "package-lock.json" "yarn.lock" "docker-compose.yml" "Dockerfile" ".github/workflows")
+PROTECTED_BASENAMES=(
+  ".env"
+  ".env.local"
+  ".env.production"
+  "package-lock.json"
+  "yarn.lock"
+  "pnpm-lock.yaml"
+  "docker-compose.yml"
+  "docker-compose.prod.yml"
+)
 
-FILE_TO_EDIT=$1
+PROTECTED_PATTERNS=(
+  "/.github/workflows/"
+  "/Dockerfile"
+)
+
+FILE_TO_EDIT="$1"
 
 if [ -z "$FILE_TO_EDIT" ]; then
   exit 0
 fi
 
-for protected in "${PROTECTED_FILES[@]}"; do
-  if [[ "$FILE_TO_EDIT" == *"$protected"* ]]; then
-    echo "⚠️ WARNING: Modificação detectada em arquivo protegido: $FILE_TO_EDIT"
-    echo "Por favor, confirme se essa alteração é intencional e segura."
-    
-    # Log de todas as modificações em arquivos sensíveis
+BASENAME=$(basename "$FILE_TO_EDIT")
+
+for protected in "${PROTECTED_BASENAMES[@]}"; do
+  if [ "$BASENAME" = "$protected" ]; then
+    echo "⚠️ WARNING: Modificação bloqueada em arquivo protegido: $FILE_TO_EDIT"
     mkdir -p .cursor/hooks/guards/logs
-    echo "$(date): Attempted to modify $FILE_TO_EDIT" >> .cursor/hooks/guards/logs/modifications.log
-    
-    # Bloqueia ou alerta dependendo da configuração. Para este hook, vamos emitir exit 1 
-    # para forçar a verificação.
+    echo "$(date -u +%Y-%m-%dT%H:%M:%SZ): Blocked edit on $FILE_TO_EDIT" >> .cursor/hooks/guards/logs/modifications.log
     exit 1
   fi
 done
+
+for pattern in "${PROTECTED_PATTERNS[@]}"; do
+  if [[ "$FILE_TO_EDIT" == *"$pattern"* ]]; then
+    echo "⚠️ WARNING: Modificação bloqueada em arquivo protegido: $FILE_TO_EDIT"
+    mkdir -p .cursor/hooks/guards/logs
+    echo "$(date -u +%Y-%m-%dT%H:%M:%SZ): Blocked edit on $FILE_TO_EDIT" >> .cursor/hooks/guards/logs/modifications.log
+    exit 1
+  fi
+done
+
+if [[ "$BASENAME" == "package.json" ]] && [[ "$FILE_TO_EDIT" != *"node_modules"* ]]; then
+  echo "⚠️ WARNING: Modificação de package.json detectada: $FILE_TO_EDIT"
+  echo "Confirme se a alteração de dependências é intencional."
+  mkdir -p .cursor/hooks/guards/logs
+  echo "$(date -u +%Y-%m-%dT%H:%M:%SZ): Warned on package.json edit: $FILE_TO_EDIT" >> .cursor/hooks/guards/logs/modifications.log
+  exit 0
+fi
 
 exit 0

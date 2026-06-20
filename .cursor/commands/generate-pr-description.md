@@ -1,6 +1,7 @@
 # Geração de Descrição de Pull Request (PR)
 
 Execute as seguintes ações para gerar uma descrição detalhada e padronizada de PR com base no git diff ou nos arquivos selecionados:
+
 1. Analise o diff e identifique todas as mudanças introduzidas no código.
 2. Formate o output com as seguintes seções estruturadas:
    - **## 📝 Resumo**: Explicação suscinta do que foi alterado.

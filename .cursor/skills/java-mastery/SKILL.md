@@ -1,29 +1,33 @@
 ---
 name: java-mastery
-description: Modern Java engineering practices and ecosystem knowledge.
+description: Práticas modernas de engenharia Java e conhecimento do ecossistema.
 disable-model-invocation: true
 ---
 
 # Java Mastery
 
-## Modern Java Features
-- **Records**: Use `record` for immutable data carriers. It drastically reduces boilerplate (getters, `equals`, `hashCode`, `toString`).
-- **Sealed Classes**: Use `sealed` classes and interfaces to restrict which classes may extend or implement them, enabling safer pattern matching.
-- **Pattern Matching**: Use pattern matching for `instanceof` and in `switch` expressions to write cleaner, more expressive logic.
-- **Text Blocks**: Use `"""` for multi-line strings (JSON, SQL, HTML) to avoid messy concatenation and escaping.
-- **Var**: Use local variable type inference (`var`) when the type is obvious from the right-hand side, improving readability.
+## Recursos Modernos do Java
 
-## JVM & Performance
-- **Garbage Collection**: Understand the basic GC algorithms (G1GC is default, ZGC/Shenandoah for low-latency). Avoid unnecessary object creation in hot loops.
-- **Memory Leaks**: Beware of keeping object references in static fields, long-lived collections, or unclosed resources.
-- **Streams API**: Use Streams for functional-style operations on collections. Be careful with parallel streams; they are only beneficial for CPU-intensive tasks on large datasets.
+- **Records**: Use `record` para data carriers imutáveis. Reduz drasticamente boilerplate (getters, `equals`, `hashCode`, `toString`).
+- **Sealed Classes**: Use classes e interfaces `sealed` para restringir quais classes podem estendê-las ou implementá-las, permitindo pattern matching mais seguro.
+- **Pattern Matching**: Use pattern matching para `instanceof` e em expressões `switch` para lógica mais limpa e expressiva.
+- **Text Blocks**: Use `"""` para strings multilinha (JSON, SQL, HTML) e evitar concatenação e escape confusos.
+- **Var**: Use inferência de tipo local (`var`) quando o tipo for óbvio pelo lado direito da atribuição, melhorando a legibilidade.
 
-## Ecosystem & Frameworks
-- **Spring Boot**: The standard for enterprise Java. Use constructor injection instead of `@Autowired` on fields. Keep controllers lean, delegating business logic to services.
-- **Build Tools**: Use Maven or Gradle. Keep dependency management clean and structured.
-- **Testing**: Use JUnit 5 and AssertJ. Utilize Testcontainers for integration testing against real databases/services instead of in-memory mocks like H2.
+## JVM e Performance
 
-## Best Practices
-- **Immutability**: Prefer immutable objects. Use `final` where applicable.
-- **Optional**: Use `Optional` as a return type to indicate that a value might be missing. Avoid using `Optional` as field types or method parameters.
-- **Exceptions**: Use unchecked exceptions (extending `RuntimeException`) for business logic errors. Checked exceptions should be reserved for recoverable environmental errors (though their usage is generally declining in modern Java).
+- **Garbage Collection**: Entenda os algoritmos básicos de GC (G1GC é o padrão; ZGC/Shenandoah para baixa latência). Evite criação desnecessária de objetos em loops críticos.
+- **Vazamentos de memória**: Cuidado ao manter referências em campos estáticos, coleções de longa duração ou recursos não fechados.
+- **Streams API**: Use Streams para operações funcionais em coleções. Cuidado com parallel streams; só são benéficos para tarefas CPU-intensive em datasets grandes.
+
+## Ecossistema e Frameworks
+
+- **Spring Boot**: Padrão para Java enterprise. Use injeção por construtor em vez de `@Autowired` em campos. Mantenha controllers enxutos, delegando lógica de negócio a services.
+- **Build Tools**: Use Maven ou Gradle. Mantenha gestão de dependências limpa e estruturada.
+- **Testes**: Use JUnit 5 e AssertJ. Utilize Testcontainers para testes de integração contra bancos/serviços reais em vez de mocks in-memory como H2.
+
+## Boas Práticas
+
+- **Imutabilidade**: Prefira objetos imutáveis. Use `final` quando aplicável.
+- **Optional**: Use `Optional` como tipo de retorno para indicar que um valor pode estar ausente. Evite `Optional` como tipo de campo ou parâmetro de método.
+- **Exceções**: Use exceções unchecked (estendendo `RuntimeException`) para erros de lógica de negócio. Exceções checked devem ser reservadas para erros ambientais recuperáveis (embora seu uso esteja em declínio no Java moderno).

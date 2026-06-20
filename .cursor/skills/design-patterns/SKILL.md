@@ -1,38 +1,44 @@
 ---
 name: design-patterns
-description: Catalog of GoF design patterns and enterprise architectures.
+description: Catálogo de padrões de projeto GoF e arquiteturas empresariais.
 disable-model-invocation: true
 ---
 
-# Design Patterns
+# Padrões de Projeto (Design Patterns)
 
-## Core Philosophy
+## Filosofia Central
 
-Design patterns are typical solutions to common problems in software design. They are like pre-made blueprints that you can customize to solve a recurring design problem in your code.
+Padrões de projeto são soluções típicas para problemas comuns em design de software. Funcionam como plantas prontas que você pode adaptar para resolver um problema recorrente de design no seu código.
 
-**Crucial Warning**: Do not apply patterns unnecessarily. Overengineering is a common pitfall. Apply a pattern only if the problem it solves exists in your domain and the pattern simplifies the code or makes it significantly more maintainable.
+**Aviso importante**: não aplique padrões desnecessariamente. Overengineering é uma armadilha comum. Use um padrão somente se o problema que ele resolve existir no seu domínio e se o padrão simplificar o código ou torná-lo significativamente mais sustentável.
 
-## Creational Patterns
-Deal with object creation mechanisms, trying to create objects in a manner suitable to the situation.
-- **Singleton**: Ensure a class only has one instance, and provide a global point of access to it. (Use sparingly).
-- **Factory Method**: Define an interface for creating an object, but let subclasses decide which class to instantiate.
-- **Abstract Factory**: Provide an interface for creating families of related or dependent objects without specifying their concrete classes.
-- **Builder**: Separate the construction of a complex object from its representation so that the same construction process can create different representations.
-- **Prototype**: Specify the kinds of objects to create using a prototypical instance, and create new objects by copying this prototype.
+## Padrões Criacionais (Creational)
 
-## Structural Patterns
-Deal with object composition or the way to realize relationships between entities.
-- **Adapter**: Convert the interface of a class into another interface clients expect.
-- **Bridge**: Decouple an abstraction from its implementation so that the two can vary independently.
-- **Composite**: Compose objects into tree structures to represent part-whole hierarchies.
-- **Decorator**: Attach additional responsibilities to an object dynamically.
-- **Facade**: Provide a unified interface to a set of interfaces in a subsystem.
-- **Proxy**: Provide a surrogate or placeholder for another object to control access to it.
+Tratam dos mecanismos de criação de objetos, buscando instanciá-los de forma adequada ao contexto.
 
-## Behavioral Patterns
-Deal with communication between objects.
-- **Observer**: Define a one-to-many dependency between objects so that when one object changes state, all its dependents are notified and updated automatically.
-- **Strategy**: Define a family of algorithms, encapsulate each one, and make them interchangeable.
-- **Command**: Encapsulate a request as an object, thereby letting you parameterize clients with different requests, queue or log requests, and support undoable operations.
-- **State**: Allow an object to alter its behavior when its internal state changes.
-- **Chain of Responsibility**: Avoid coupling the sender of a request to its receiver by giving more than one object a chance to handle the request.
+- **Singleton**: Garante que uma classe tenha apenas uma instância e fornece um ponto global de acesso a ela. (Use com moderação).
+- **Factory Method**: Define uma interface para criar um objeto, mas deixa as subclasses decidirem qual classe instanciar.
+- **Abstract Factory**: Fornece uma interface para criar famílias de objetos relacionados ou dependentes sem especificar suas classes concretas.
+- **Builder**: Separa a construção de um objeto complexo de sua representação, permitindo que o mesmo processo de construção crie representações diferentes.
+- **Prototype**: Especifica os tipos de objetos a serem criados a partir de uma instância prototípica e cria novos objetos copiando esse protótipo.
+
+## Padrões Estruturais (Structural)
+
+Tratam da composição de objetos ou da forma de estabelecer relações entre entidades.
+
+- **Adapter**: Converte a interface de uma classe em outra interface esperada pelos clientes.
+- **Bridge**: Desacopla uma abstração de sua implementação para que ambas possam variar de forma independente.
+- **Composite**: Compõe objetos em estruturas em árvore para representar hierarquias parte-todo.
+- **Decorator**: Anexa responsabilidades adicionais a um objeto de forma dinâmica.
+- **Facade**: Fornece uma interface unificada para um conjunto de interfaces de um subsistema.
+- **Proxy**: Fornece um substituto ou placeholder para outro objeto, controlando o acesso a ele.
+
+## Padrões Comportamentais (Behavioral)
+
+Tratam da comunicação entre objetos.
+
+- **Observer**: Define uma dependência um-para-muitos entre objetos, de modo que, quando um objeto muda de estado, todos os seus dependentes são notificados e atualizados automaticamente.
+- **Strategy**: Define uma família de algoritmos, encapsula cada um deles e os torna intercambiáveis.
+- **Command**: Encapsula uma requisição como um objeto, permitindo parametrizar clientes com diferentes requisições, enfileirar ou registrar operações e suportar ações desfazíveis (undo).
+- **State**: Permite que um objeto altere seu comportamento quando seu estado interno muda.
+- **Chain of Responsibility**: Evita acoplar o emissor de uma requisição ao seu receptor, dando a mais de um objeto a chance de tratá-la.

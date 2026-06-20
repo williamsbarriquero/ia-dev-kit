@@ -6,29 +6,44 @@ disable-model-invocation: true
 
 # Integração e Ferramentas MCP
 
-O Model Context Protocol (MCP) estende as capacidades dos agentes de IA, dando acesso direto e seguro a bancos de dados, ferramentas de busca e sistemas externos do ecossistema RPE.
+O Model Context Protocol (MCP) estende as capacidades dos agentes de IA com acesso a documentação, GitHub e Jira.
 
-## Diretrizes de Uso de Ferramentas
-Todo agente de IA operando com MCP deve seguir estas regras:
-1. **Listagem de Ferramentas**: Execute `list_tools` no início do ciclo caso precise descobrir quais recursos estão acoplados.
-2. **Respeito a Schemas**: Analise o JSON Schema das ferramentas antes de disparar payloads para evitar erros de sintaxe ou chamadas inválidas.
-3. **Não-Destrutibilidade**: Nunca execute comandos destrutivos (como delete de tabelas, encerramento de servidores ou commits em branch protegida) sem aprovação manual explícita do usuário.
-4. **Cache & Minimização**: Evite chamar a mesma ferramenta repetidas vezes no mesmo turno. Salve o resultado em cache no contexto da conversa se o dado for imutável.
+## Diretrizes de Uso
 
-## Servidores MCP Suportados & Utilidades
+1. **Listar tools**: Consultar schema/descriptor antes de invocar qualquer tool MCP.
+2. **Respeitar schemas**: Validar payload contra JSON Schema da tool.
+3. **Não-destrutividade**: Nunca executar DELETE, DROP, force push ou operações irreversíveis sem aprovação explícita.
+4. **Cache**: Evitar chamadas repetidas no mesmo turno para dados imutáveis.
 
-### 1. `context7` (Análise Estrutural e Arquivos Complexos)
-* **Objetivo**: Fazer análise profunda e de escopo estrutural em arquivos extensos e no workspace.
-* **Quando usar**: Use quando precisar mapear dependências circulares, fluxos de herança, e compreender grandes fluxos arquiteturais de código de forma simplificada antes de alterar arquivos.
+## Servidores Configuráveis
 
-### 2. `mgrep` (Busca Multiline de Alta Performance)
-* **Objetivo**: Executar buscas textuais complexas e estruturadas em múltiplos arquivos usando expressões regulares ou correspondência multilinhas de alto desempenho.
-* **Quando usar**: Substitui buscas simples em pastas quando o padrão procurado está distribuído em mais de uma linha de código (ex: blocos de declaração de métodos ou declarações de classes).
+Template em `.cursor/mcp.json.example`. Variáveis via ambiente (`${env:VAR}`).
 
-### 3. Jira / Confluence (`mcp-jira`)
-* **Objetivo**: Gerenciar tarefas ágeis e manter a documentação sincronizada.
-* **Quando usar**: O agente `@rpe-atlassian` deve usar para atualizar status de histórias, ler especificações de negócio e registrar notas de release (RFCs).
+### context7
 
-### 4. GitHub / GitLab (`mcp-github`)
-* **Objetivo**: Automatizar interações de controle de versão.
-* **Quando usar**: Criar Pull Requests, ler reviews e logs de pipelines de CI/CD para diagnosticar falhas de compilação.
+- **Objetivo**: Documentação atualizada de bibliotecas e frameworks.
+- **Quando usar**: Dúvidas sobre API, configuração ou migração de dependências.
+
+### mcp-github
+
+- **Objetivo**: PRs, issues, checks de CI.
+- **Quando usar**: Criar PR, ler reviews, diagnosticar falhas de pipeline.
+
+### mcp-jira (opcional)
+
+- **Objetivo**: Tickets Jira e documentação Confluence.
+- **Quando usar**: `@rpe-atlassian.md` para ler/atualizar histórias e RFCs.
+
+### mcp-postgres (desabilitado por default)
+
+- **Risco**: Acesso SQL direto. Habilitar somente com read-only e whitelist de schema.
+- **Guard**: Hook `mcp-guard.sh` bloqueia DROP/TRUNCATE/DELETE em massa.
+
+## Agentes por Servidor
+
+| Servidor | Agente principal |
+|----------|------------------|
+| context7 | Todos (documentação) |
+| mcp-github | developer, reviewer, infra |
+| mcp-jira | atlassian |
+| mcp-postgres | dba (somente leitura) |

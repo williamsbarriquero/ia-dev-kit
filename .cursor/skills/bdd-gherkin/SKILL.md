@@ -6,10 +6,12 @@ disable-model-invocation: true
 # BDD e Gherkin (Ports & Adapters de Comportamento)
 
 ## Princípios do BDD
+
 - **3 Amigos**: Colaboração constante entre Negócio (PO/PM), Desenvolvimento e QA para alinhar a compreensão antes do código.
 - **Linguagem Ubíqua**: Uso de uma linguagem comum que todos os membros do time entendem.
 
 ## Escrita Gherkin Avançada
+
 - **Dado (Given)**: Configura o estado inicial do sistema. Evite ações nesta etapa.
 - **Quando (When)**: Descreve a ação chave ou evento de negócio disparado pelo usuário.
 - **Então (Then)**: Descreve o resultado observado ou efeito colateral. Deve ser assertivo.

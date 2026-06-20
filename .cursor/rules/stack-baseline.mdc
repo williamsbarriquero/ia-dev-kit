@@ -1,0 +1,48 @@
+---
+description: "Comandos de verificação e Definition of Done por stack tecnológica"
+alwaysApply: true
+---
+
+# Stack Baseline RPE
+
+## Contexto
+
+SSOT para comandos de verificação aplicáveis conforme a stack do projeto. Referenciado por `AGENTS.md`, `tdd-workflow.mdc` e agentes de implementação.
+
+## Instruções
+
+Identifique a stack principal e execute os comandos correspondentes antes de declarar conclusão:
+
+### Node.js / TypeScript
+
+- Lint: `npx eslint . --fix`
+- Format: `npx prettier --write .`
+- Type-check: `npx tsc --noEmit`
+- Testes: `npm test`
+
+### Go
+
+- Lint: `golangci-lint run --fix`
+- Format: `gofmt -w .`
+- Testes: `go test ./...`
+
+### Java
+
+- Quality: `./gradlew spotlessApply` ou `./mvnw spotless:apply`
+- Testes: `./gradlew test` ou `./mvnw test`
+
+### RPE Harness / Shell
+
+- Validação: `./scripts/validate.sh`
+- Lint shell: `shellcheck scripts/*.sh`
+
+## Definition of Done
+
+1. Código compila sem erros de tipagem/compilação.
+2. Suíte de testes retorna exit code `0`.
+3. Linter e formatadores retornam exit code `0`.
+4. Modificações prontas para commit quando solicitado pelo usuário (Conventional Commits).
+
+## Verificação
+
+Comando consolidado: `@validate-stack.md`

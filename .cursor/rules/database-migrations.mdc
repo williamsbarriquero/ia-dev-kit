@@ -1,15 +1,17 @@
 ---
 description: "Boas práticas para migrações e modificações em banco de dados"
-globs: "**/*.sql", "**/migrations/**", "**/db/migrations/*"
+globs: ["**/*.sql", "**/migrations/**", "**/db/migrations/*"]
 alwaysApply: false
 ---
 
 # Padrões de Migração Segura de Banco de Dados
 
 ## Contexto
+
 Define as regras e boas práticas obrigatórias para criação e alteração de tabelas/esquemas de banco de dados (SQL, Flyway, Liquibase, migrations nativas).
 
 ## Instruções
+
 Ao criar ou alterar arquivos de migração de banco de dados:
 
 - **Estratégia de Rollback**: Toda migração incremental (Up) DEVE possuir um script correspondente de reversão (Down/Rollback) válido e testável.

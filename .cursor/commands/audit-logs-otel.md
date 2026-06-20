@@ -1,6 +1,7 @@
 # Auditoria de Logs e Rastreabilidade (OpenTelemetry & LGPD)
 
 Execute as seguintes ações para auditar logs e spans nos arquivos de código selecionados:
+
 1. Varra o código procurando por chamadas de escrita de logs (ex: `log.info`, `console.log`, `logger.error`).
 2. Avalie as seguintes conformidades:
    - **Rastreabilidade**: Há propagação de trace context ou IDs de transação no escopo do log?

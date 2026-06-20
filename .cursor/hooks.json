@@ -20,6 +20,16 @@
       {
         "command": "bash .cursor/hooks/guards/write-file-guard.sh"
       }
+    ],
+    "beforeShellExecution": [
+      {
+        "command": "bash .cursor/hooks/guards/shell-guard.sh"
+      }
+    ],
+    "beforeMCPExecution": [
+      {
+        "command": "bash .cursor/hooks/guards/mcp-guard.sh"
+      }
     ]
   }
 }

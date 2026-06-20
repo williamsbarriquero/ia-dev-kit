@@ -14,31 +14,21 @@ A execução segue um fluxo fechado e iterativo estruturado em nove componentes 
 
 * **Motor de Loop (While-Loop):** O motor fundamental de execução que transforma o LLM de um gerador de texto de disparo único em um agente de execução contínua. O loop de controle avalia as instruções do prompt de sistema, decide quais ferramentas invocar, executa-as em um ambiente controlado e alimenta os resultados de volta para a janela de contexto, iterando até atingir um critério de parada ou um limite máximo de execução.
 
-
 * **Gerenciamento de Contexto:** Processo responsável por monitorar o crescimento da árvore de conversação e aplicar algoritmos de compactação semântica assim que o consumo de tokens atinge o limiar crítico de 80% a 90% do limite total do modelo. A decisão de compactação envolve a escolha de reterm as mensagens recentes em formato integral e resumir as interações passadas. O tratamento de entradas e saídas de ferramentas durante a compactação envolve um compromisso direto entre custo e precisão, onde a preservação integral é mais fiel e cara, enquanto a preservação exclusiva dos resultados economiza tokens, mas descarta o raciocínio intermediário.
-
 
 * **Camada de Execução de Ferramentas (Tool Registry):** O mediador físico entre o agente e o ambiente externo. Esta camada gerencia a execução de comandos de shell, requisições de API, consultas a bancos de dados e manipulações de arquivos em ambientes de sandbox isolados, aplicando limites de tempo de execução (*timeouts*) e de permissões de acesso.
 
-
 * **Orquestração e Gestão de Subagentes:** Mecanismo responsável por instanciar e monitorar trabalhadores secundários efêmeros com acessos dedicados a ferramentas e janelas de contexto restritas, evitando a contaminação e a saturação da sessão principal.
-
 
 * **Habilidades Embutidas (Built-in Skills):** Comportamentos pré-definidos integrados nativamente pela plataforma (como comandos estruturados de Git, rotinas de revisão de Pull Requests e mecanismos de depuração automática) que reduzem a necessidade de o modelo improvisar lógicas complexas de controle.
 
-
 * **Persistência de Sessão e Estado:** Gravação de estados de execução, checkpoints do sistema de arquivos e históricos de conversa em disco ou bancos de dados locais, permitindo a restauração completa das atividades em caso de falha ou suspensão.
-
 
 * **Montagem de Prompt de Sistema (System Prompt Assembly):** Compilador dinâmico de contexto que injeta dados atualizados sobre o ambiente (como status do Git, metadados do sistema operacional, diretório ativo e lista de ferramentas disponíveis com suas respectivas permissões) imediatamente antes de cada envio ao modelo.
 
-
 * **Ganchos de Ciclo de Vida (Lifecycle Hooks):** Pontos de extensão determinísticos que permitem interceptar e bloquear ações do agente com base em validações programáticas externas, operando de forma independente do contexto do LLM.
 
-
 * **Camada de Segurança e Controle de Permissões:** Validador dinâmico que inspeciona sintaticamente e autoriza comandos de terminal ou modificações de arquivos antes de sua efetivação no ambiente de execução, suportando regras de aprovação humana interativa ou listas de permissões estáticas.
-
-
 
 A otimização de tokens de contexto no Cursor baseia-se fortemente na ativação do *Symbol Index*. Ao realizar a varredura em segundo plano do repositório para construir uma tabela detalhada de símbolos (mapeando classes, métodos e dependências), o agente consulta o índice de símbolos em vez de realizar a leitura completa de arquivos de código. A conservação de tokens proporcionada por esse mecanismo pode ser descrita matematicamente. Se $C_{\text{raw}}$ representa o custo de tokens do carregamento de arquivos integrais na janela de contexto, e $C_{\text{index}}$ representa o custo do carregamento otimizado baseado no índice de símbolos, a economia de tokens é determinada de forma linear pelo coeficiente de eficiência de indexação $\eta$ :
 
@@ -58,19 +48,19 @@ Para garantir que os agentes permaneçam leves e altamente focados, são imposto
 
 | Parâmetro Operacional | Padrão Agente Monolítico (Legacy) | Padrão Agente Leve (Thin Agent) |
 | --- | --- | --- |
-| **Linhas de Código de Instrução** | > 1.000 linhas | < 150 linhas (limite estrito) 
+| **Linhas de Código de Instrução** | > 1.000 linhas | < 150 linhas (limite estrito)
 
  |
-| **Consumo de Tokens por Spawn** | ~24.000 tokens | ~2.700 tokens 
+| **Consumo de Tokens por Spawn** | ~24.000 tokens | ~2.700 tokens
 
  |
-| **Custo de Descoberta Semântica** | Elevado (> 8.000 caracteres) | 500 a 1.000 caracteres 
+| **Custo de Descoberta Semântica** | Elevado (> 8.000 caracteres) | 500 a 1.000 caracteres
 
  |
-| **Janela de Histórico e Estado** | Acumulada e compartilhada entre execuções | Zerada a cada spawn de instância secundária 
+| **Janela de Histórico e Estado** | Acumulada e compartilhada entre execuções | Zerada a cada spawn de instância secundária
 
  |
-| **Capacidade de Recursão** | Permitida (indutora de loops infinitos) | Bloqueada fisicamente no tempo de execução 
+| **Capacidade de Recursão** | Permitida (indutora de loops infinitos) | Bloqueada fisicamente no tempo de execução
 
  |
 
@@ -80,10 +70,7 @@ Uma das maiores fontes de falha em sistemas multiagentes é a quebra de papéis 
 
 * **Agente Coordenador (Main Thread):** Possui acesso exclusivo às ferramentas de delegação e gerenciamento, como `Task`, `TodoWrite` e `Read`. É fisicamente desprovido de ferramentas de modificação, não possuindo acesso a `Edit`, `Write` ou execução de terminal `Bash`. Esta restrição garante que o coordenador permaneça puramente na camada conceitual e estratégica.
 
-
 * **Agente Executor (Sub-Agent/Worker):** Possui acesso total às ferramentas operacionais e de alteração física do sistema de arquivos, incluindo `Edit`, `Write` e `Bash`. É desprovido de ferramentas de delegação como `Task`, impedindo a criação de cadeias de sub-subagentes e loops infinitos de delegação.
-
-
 
 ### A Linha de Montagem de Desenvolvimento de Cinco Papéis
 
@@ -91,19 +78,13 @@ As demandas complexas de engenharia são processadas por meio de uma arquitetura
 
 * **Líder de Especialidade (*Lead - `*-lead*`):** Responsável exclusivo pela análise de requisitos e pela geração de um plano de arquitetura estruturado e atômico em formato JSON. Não realiza modificações diretas no código do repositório.
 
-
 * **Desenvolvedor de Especialidade (*Developer - `*-developer*`):** Recebe o plano de arquitetura gerado pelo líder e implementa as modificações necessárias, focando estritamente na lógica interna das funções.
-
 
 * **Revisor de Especialidade (*Reviewer - `*-reviewer*`):** Analisa o código desenvolvido em relação aos padrões de arquitetura e cobertura lógica do repositório, emitindo um relatório estruturado de aprovação ou rejeição técnica.
 
-
 * **Líder de Testes (*Test Lead - `test-lead*`):** Determina as estratégias de teste adequadas (unitários, integração ou ponta a ponta) com base no plano de implementação e gera o plano de testes.
 
-
 * **Tester de Especialidade (*Tester - `*-tester*`):** Codifica e executa os casos de teste especificados no plano de validação, emitindo relatórios de aprovação com base no código de saída das ferramentas de testes.
-
-
 
 Para manter a consistência em modificações de grande escala, as transições entre esses papéis são controladas por uma máquina de estados padronizada de 16 fases, monitorada por ganchos de compactação (*compaction gates*) que bloqueiam a execução e forçam a consolidação de contexto sempre que o consumo acumulado ultrapassa o teto de 85% da capacidade suportada pelo modelo.
 
@@ -146,34 +127,34 @@ Abaixo está o mapeamento dos ganchos nativos disponíveis e sua correspondênci
 
 | Gancho de Evento | Momento de Disparo no Tempo de Execução | Aplicação Prática Recomendada |
 | --- | --- | --- |
-| `onPreEdit` | Disparado antes de o Composer persistir alterações fisicamente no sistema de arquivos. 
+| `onPreEdit` | Disparado antes de o Composer persistir alterações fisicamente no sistema de arquivos.
 
- | Bloqueio de alterações que violem regras de segurança estática do projeto. 
-
- |
-| `onPostEdit` | Invocado após a gravação das alterações em disco pelo Composer. 
-
- | Execução de formatadores e linters automatizados sobre os arquivos modificados. 
+ | Bloqueio de alterações que violem regras de segurança estática do projeto.
 
  |
-| `onPreCommit` | Executado imediatamente antes de o agente submeter um commit estruturado ao Git. 
+| `onPostEdit` | Invocado após a gravação das alterações em disco pelo Composer.
 
- | Validação de chaves de API expostas de forma acidental e varredura de segredos. 
-
- |
-| `onApprove` | Disparado quando o desenvolvedor clica em aprovar em um diff exibido no Composer. 
-
- | Coleta de métricas de aceitação e auditoria de alterações aceitas pelo desenvolvedor. 
+ | Execução de formatadores e linters automatizados sobre os arquivos modificados.
 
  |
-| `subagentStop` | Disparado quando uma sessão ativa de subagente secundário encerra sua execução. 
+| `onPreCommit` | Executado imediatamente antes de o agente submeter um commit estruturado ao Git.
 
- | Injeção de prompts de revisão estética e validação de padrões de componentes. 
+ | Validação de chaves de API expostas de forma acidental e varredura de segredos.
 
  |
-| `stop` | Disparado ao término do loop principal de execução do agente. 
+| `onApprove` | Disparado quando o desenvolvedor clica em aprovar em um diff exibido no Composer.
 
- | Verificação de cobertura de testes de regressão antes da entrega final. 
+ | Coleta de métricas de aceitação e auditoria de alterações aceitas pelo desenvolvedor.
+
+ |
+| `subagentStop` | Disparado quando uma sessão ativa de subagente secundário encerra sua execução.
+
+ | Injeção de prompts de revisão estética e validação de padrões de componentes.
+
+ |
+| `stop` | Disparado ao término do loop principal de execução do agente.
+
+ | Verificação de cobertura de testes de regressão antes da entrega final.
 
  |
 
@@ -186,6 +167,7 @@ Para além dos subagentes nativos do sistema (como `Explore` para análise de c�
 ---
 
 ## name: schema-auditor
+
 description: "Subagente especialista em analisar esquemas de banco de dados e arquivos de migração."
 model: gpt-4o
 readonly: true
@@ -237,13 +219,9 @@ Embora a flexibilidade do protocolo MCP permita a conexão de dezenas de utilit�
 
 * **O Teto de 40 Ferramentas Ativas:** O Cursor impõe um limite técnico de segurança de aproximadamente 40 ferramentas expostas simultaneamente através de todos os servidores MCP configurados. Se esse número for excedido, o usuário receberá avisos no sistema e, de forma silenciosa, o agente perderá a visibilidade e o acesso a ferramentas adicionais. Esse limite existe porque cada descrição detalhada de parâmetros e funcionalidades das ferramentas consome tokens de contexto ativos. O excesso de esquemas inseridos no prompt de inicialização deteriora a acurácia do modelo de linguagem, reduzindo drasticamente sua capacidade de selecionar a ferramenta correta para a resolução do problema corrente.
 
-
 * **Isolamento do Background Agent:** Atualmente, os serviços de execução assíncrona em nuvem do Cursor (*Background Agent*) operam de forma estritamente isolada e não possuem visibilidade ou capacidade de carregar servidores MCP declarados pelo desenvolvedor no arquivo local `.cursor/mcp.json`. O agente de nuvem é limitado de forma nativa às ferramentas de navegador integradas da IDE. Portanto, qualquer workflow que dependa de ferramentas MCP customizadas deve ser executado obrigatoriamente em sessões locais dentro do editor do desenvolvedor.
 
-
 * **Vulnerabilidade de Credenciais e Confiança:** Servidores MCP operam com o nível completo de privilégios de autenticação configurados no ambiente do desenvolvedor. Recomenda-se desativar o modo de aprovação automática de ferramentas (Yolo Mode) para ferramentas que executem modificações destrutivas ou chamadas externas e priorizar o uso de credenciais e chaves de API com escopos limitados de leitura (*least privilege*).
-
-
 
 ---
 
@@ -261,46 +239,46 @@ Abaixo está o detalhamento comparativo das características e capacidades dos t
 
 | Característica Estrutural | Regras Modernas `.cursor/rules/*.mdc` | Configuração `CLAUDE.md` | Padrão Universal `agents.md` |
 | --- | --- | --- | --- |
-| **Sintaxe do Arquivo** | Markdown com Frontmatter YAML 
+| **Sintaxe do Arquivo** | Markdown com Frontmatter YAML
 
- | Markdown Simples 
+ | Markdown Simples
 
- | Markdown Simples 
-
- |
-| **Escopo de Arquivos** | Filtros de Globs Granulares e Múltiplos 
-
- | Não aplicável (Nível de Repositório) 
-
- | Escopo por Nível de Diretório 
+ | Markdown Simples
 
  |
-| **Modos de Ativação** | Quatro Modos (Always, Auto, Agent, Manual) 
+| **Escopo de Arquivos** | Filtros de Globs Granulares e Múltiplos
 
- | Sempre Ativo (Always-on) 
+ | Não aplicável (Nível de Repositório)
 
- | Sempre Ativo (Always-on) 
-
- |
-| **Economia de Tokens** | Alta (Carregamento estrito sob demanda) 
-
- | Baixa (Saturação de contexto constante) 
-
- | Baixa (Saturação de contexto constante) 
+ | Escopo por Nível de Diretório
 
  |
-| **Compatibilidade** | Exclusivo do Cursor IDE 
+| **Modos de Ativação** | Quatro Modos (Always, Auto, Agent, Manual)
 
- | Exclusivo do Claude Code 
+ | Sempre Ativo (Always-on)
 
- | Multi-IDE (Codex, Copilot, Cline, Aider) 
+ | Sempre Ativo (Always-on)
 
  |
-| **Padrão de Prioridade** | Cascata por especificidade de Globs 
+| **Economia de Tokens** | Alta (Carregamento estrito sob demanda)
 
- | Cascata por proximidade de diretórios 
+ | Baixa (Saturação de contexto constante)
 
- | Cascata por proximidade de diretórios 
+ | Baixa (Saturação de contexto constante)
+
+ |
+| **Compatibilidade** | Exclusivo do Cursor IDE
+
+ | Exclusivo do Claude Code
+
+ | Multi-IDE (Codex, Copilot, Cline, Aider)
+
+ |
+| **Padrão de Prioridade** | Cascata por especificidade de Globs
+
+ | Cascata por proximidade de diretórios
+
+ | Cascata por proximidade de diretórios
 
  |
 
@@ -338,21 +316,32 @@ A adoção consistente de baselines estruturadas sob os padrões de comando e re
 
 Com base nas especificações técnicas detalhadas, apresenta-se a arquitetura recomendada para a implantação de um kit de ferramentas de IA (*ai-dev-kit*) de alta performance no Cursor IDE. A infraestrutura baseia-se na consolidação de ferramentas determinísticas fora do contexto dos modelos de linguagem para orquestrar de forma consistente a criação, teste e entrega contínua de software.
 
-```
+```shell
 meu-repositorio/
 ├──.cursor/
 │   ├── agents/
-│   │   ├── lead-architect.md        # Arquiteto de Sistemas (Read-only, sem permissão Bash)
-│   │   └── code-executor.md         # Desenvolvedor de Software (Acesso total Edit/Bash)
+│   │   ├── rpe-architect.md         # Arquiteto de Sistemas (Read-only)
+│   │   ├── rpe-developer.md         # Desenvolvedor (Edit/Bash)
+│   │   ├── rpe-test-lead.md         # Líder TDD (Read-only)
+│   │   ├── rpe-tester.md            # Executor TDD
+│   │   └── rpe-*.md                 # Demais especialistas (security, sdet, infra, dba...)
 │   ├── commands/
-│   │   └── validate-pipeline.md     # Template de prompt para auditoria rápida de YAML
+│   │   ├── ultrawork.md             # Modo automação total
+│   │   └── validate-stack.md        # Validação de stack
 │   ├── hooks/
-│   │   ├── audit-credentials.sh     # Gancho de auditoria estática pré-commit
-│   │   └── grind-loop.ts            # Script Bun de controle iterativo de TDD (Stop Hook)
+│   │   ├── continuations/
+│   │   │   └── grind-loop.ts        # Script Bun de controle iterativo TDD (Stop Hook)
+│   │   ├── guards/
+│   │   │   ├── secret-scanner.sh    # Detecção de segredos
+│   │   │   ├── write-file-guard.sh  # Proteção de arquivos críticos
+│   │   │   ├── shell-guard.sh       # Bloqueio de comandos destrutivos
+│   │   │   └── mcp-guard.sh         # Bloqueio de SQL destrutivo via MCP
+│   │   └── transforms/
+│   │       └── lint-on-save.sh      # Lint/format stack-aware
 │   ├── rules/
-│   │   ├── 00-stack-baseline.mdc    # Regra Global (Always Apply): Definições de versões da stack
-│   │   ├── 01-api-routing.mdc       # Regra Inteligente (Agent Decision): Configurações HTTP/API
-│   │   └── 02-test-standards.mdc    # Regra de Glob (Auto-Attached): Padrões de testes e mocks
+│   │   ├── stack-baseline.mdc       # Regra Global: DoD multi-stack
+│   │   ├── go-standards.mdc         # Regra de Glob: Padrões Go
+│   │   └── testing-standards.mdc    # Regra de Glob: Padrões de testes
 │   ├── skill-library/
 │   │   └── configure-cloud-vault.md # Habilidade Avançada (Biblioteca Nível 2): Gestão de segredos
 │   ├── skills/
@@ -379,7 +368,7 @@ A abaixo está a declaração do registro de ganchos no arquivo `.cursor/hooks.j
   "hooks": {
     "stop": [
       {
-        "command": "bun run.cursor/hooks/grind-loop.ts"
+        "command": "bun run .cursor/hooks/continuations/grind-loop.ts"
       }
     ]
   }
@@ -387,7 +376,7 @@ A abaixo está a declaração do registro de ganchos no arquivo `.cursor/hooks.j
 
 ```
 
-O script TypeScript a seguir, hospedado no arquivo `.cursor/hooks/grind-loop.ts` e executado utilizando o ambiente de tempo de execução Bun, intercepta os dados do canal de entrada padrão (`stdin`), inspeciona a persistência do arquivo de notas (*scratchpad*) e emite a ordem de reingresso no loop de execução caso as asserções falhem :
+O script TypeScript a seguir, hospedado em `.cursor/hooks/continuations/grind-loop.ts` e executado com Bun, intercepta o `stdin`, executa testes da stack, inspeciona `.cursor/scratchpad.md` e emite reingresso no loop caso as asserções falhem:
 
 ```typescript
 import { readFileSync, writeFileSync, existsSync } from "fs";
@@ -453,12 +442,13 @@ Abaixo está o exemplo de especificação de descoberta dinâmica hospedado no a
 ---
 
 ## description: "Regra ativada ao gerar novos manifestos de implantação ou interagir com APIs de CI/CD"
+
 globs: ["pipelines/**/*.yaml", "infra/**/*.tf"]
 alwaysApply: false
 
-# Diretrizes para Integração e Descoberta Dinâmica de Esquemas
+## Diretrizes para Integração e Descoberta Dinâmica de Esquemas
 
-## Ordem de Operações Obrigatória para Geração de Payloads
+### Ordem de Operações Obrigatória para Geração de Payloads
 
 Para evitar falhas de compilação por uso de esquemas de API desatualizados ou caminhos incorretos de parâmetros, o agente é expressamente proibido de adivinhar nomes de propriedades ou estruturas de dados. Siga rigorosamente a sequência de execução abaixo:
 

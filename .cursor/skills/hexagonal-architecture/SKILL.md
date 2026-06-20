@@ -1,27 +1,27 @@
 ---
 name: hexagonal-architecture
-description: Library of knowledge for Ports & Adapters (Hexagonal) architecture software design.
+description: Biblioteca de conhecimento sobre arquitetura hexagonal (Ports & Adapters).
 disable-model-invocation: true
 ---
 
-# Hexagonal Architecture (Ports & Adapters)
+# Arquitetura Hexagonal (Ports & Adapters)
 
-## Core Principles
+## Princípios Centrais
 
-The Hexagonal Architecture, or Ports and Adapters architecture, aims to create loosely coupled application components that can be easily connected to their software environment. It makes components exchangeable at any level and facilitates test automation.
+A Arquitetura Hexagonal, ou arquitetura Ports and Adapters, busca criar componentes de aplicação fracamente acoplados que possam ser conectados facilmente ao ambiente de software. Torna os componentes substituíveis em qualquer nível e facilita a automação de testes.
 
-1. **Dependency Rule**: The core domain logic does not depend on anything outside of it. All dependencies point inward toward the domain.
-2. **Separation of Concerns**: Keep business logic completely separate from external systems (databases, UI, APIs, message brokers).
-3. **Ports**: Interfaces defined by the application core that define how it communicates with the outside world.
-   - **Inbound/Driving/Primary Ports**: How outside actors interact with the application (e.g., Use Case interfaces).
-   - **Outbound/Driven/Secondary Ports**: How the application interacts with outside actors (e.g., Repository interfaces).
-4. **Adapters**: Implementations that interact with the external world and plug into the Ports.
-   - **Primary Adapters**: Implement inbound ports (e.g., REST Controllers, CLI Commands, GraphQL Resolvers). They drive the application.
-   - **Secondary Adapters**: Implement outbound ports (e.g., Database Repositories, HTTP Clients to external services, Event Publishers). They are driven by the application.
+1. **Regra de Dependência**: A lógica central do domínio não depende de nada externo a ela. Todas as dependências apontam para dentro, em direção ao domínio.
+2. **Separação de Responsabilidades**: Mantenha a lógica de negócio completamente separada de sistemas externos (bancos de dados, UI, APIs, message brokers).
+3. **Ports**: Interfaces definidas pelo núcleo da aplicação que especificam como ela se comunica com o mundo externo.
+   - **Ports de entrada/driving/primary**: Como atores externos interagem com a aplicação (ex.: interfaces de Use Case).
+   - **Ports de saída/driven/secondary**: Como a aplicação interage com atores externos (ex.: interfaces de Repository).
+4. **Adapters**: Implementações que interagem com o mundo externo e se conectam aos Ports.
+   - **Adapters primários**: Implementam ports de entrada (ex.: REST Controllers, CLI Commands, GraphQL Resolvers). Eles conduzem a aplicação.
+   - **Adapters secundários**: Implementam ports de saída (ex.: Database Repositories, HTTP Clients para serviços externos, Event Publishers). Eles são conduzidos pela aplicação.
 
-## Best Practices
+## Boas Práticas
 
-- **Domain Isolation**: Ensure your domain entities and use cases have zero knowledge of frameworks, databases, or transport layers.
-- **Dependency Injection**: Use DI to wire adapters to ports at the application entry point (e.g., main function or DI container configuration).
-- **Testability**: The core application should be testable without any external dependencies by mocking or stubbing the outbound ports.
-- **Mapping**: Avoid leaking domain entities to the outside. Map external DTOs to domain entities in primary adapters, and domain entities to database models or external payloads in secondary adapters.
+- **Isolamento do domínio**: Garanta que entidades de domínio e use cases não tenham conhecimento de frameworks, bancos de dados ou camadas de transporte.
+- **Injeção de dependência**: Use DI para conectar adapters aos ports no ponto de entrada da aplicação (ex.: função main ou configuração do container DI).
+- **Testabilidade**: O núcleo da aplicação deve ser testável sem dependências externas, mockando ou stubando os ports de saída.
+- **Mapeamento**: Evite vazar entidades de domínio para o exterior. Mapeie DTOs externos para entidades de domínio nos adapters primários e entidades de domínio para modelos de banco ou payloads externos nos adapters secundários.

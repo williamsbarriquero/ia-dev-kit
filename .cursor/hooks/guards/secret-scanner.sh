@@ -1,16 +1,24 @@
 #!/bin/bash
+# Varre working tree e staged files por padrões de credenciais
 
-# Varre arquivos em stage (staged files) por padrões de credenciais
-echo "Scanning for secrets in staged files..."
+set -euo pipefail
 
-# Regex patterns (AWS keys, tokens JWT, passwords hardcoded, etc)
-PATTERN="(password|secret|api[_-]?key|token|AKIA[A-Z0-9]{16})\s*[:=]\s*['\"][^'\"]+['\"]"
+echo "Scanning for secrets..."
 
-# Usar git diff para arquivos no stage e ignorar case (-i)
-MATCHES=$(git diff --cached -i -E | grep -E "$PATTERN")
+PATTERN='(password|secret|api[_-]?key|token|AKIA[A-Z0-9]{16})\s*[:=]\s*['\''"][^'\''"]+['\''"]'
 
-if [ ! -z "$MATCHES" ]; then
-  echo "❌ ERROR: Potential secrets exposed in staged files!"
+MATCHES=""
+
+if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+  STAGED=$(git diff --cached -i -E 2>/dev/null | grep -E "$PATTERN" || true)
+  UNSTAGED=$(git diff -i -E 2>/dev/null | grep -E "^\+.*" | grep -E "$PATTERN" || true)
+  MATCHES="${STAGED}${UNSTAGED}"
+else
+  MATCHES=$(grep -rEi "$PATTERN" --include="*.ts" --include="*.js" --include="*.go" --include="*.java" --include="*.env*" --include="*.yml" --include="*.yaml" --include="*.json" . 2>/dev/null | grep -v "node_modules" | grep -v ".git" || true)
+fi
+
+if [ -n "$MATCHES" ]; then
+  echo "❌ ERROR: Potential secrets detected!"
   echo "$MATCHES"
   exit 1
 fi

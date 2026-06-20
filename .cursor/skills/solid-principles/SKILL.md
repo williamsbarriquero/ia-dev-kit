@@ -1,40 +1,51 @@
 ---
 name: solid-principles
-description: Practical fundamentals of SOLID object-oriented design.
+description: Fundamentos práticos dos princípios SOLID de design orientado a objetos.
 disable-model-invocation: true
 ---
 
-# SOLID Principles
+# Princípios SOLID
 
-## Overview
-SOLID is an acronym for five design principles intended to make software designs more understandable, flexible, and maintainable.
+## Visão Geral
+
+SOLID é um acrônimo para cinco princípios de design que tornam software mais compreensível, flexível e sustentável.
 
 ## 1. Single Responsibility Principle (SRP)
-*A class should have one, and only one, reason to change.*
-- **Definition**: Every module or class should have responsibility over a single part of the functionality provided by the software.
-- **Heuristic**: If you can think of more than one motive for changing a class, then that class has more than one responsibility.
-- **Violation Example**: A class that handles both formatting a report and printing it to an output stream.
+
+*Uma classe deve ter um, e apenas um, motivo para mudar.*
+
+- **Definição**: Cada módulo ou classe deve ter responsabilidade sobre uma única parte da funcionalidade fornecida pelo software.
+- **Heurística**: Se você consegue pensar em mais de um motivo para alterar uma classe, ela tem mais de uma responsabilidade.
+- **Exemplo de violação**: Uma classe que formata um relatório e também o imprime em um stream de saída.
 
 ## 2. Open/Closed Principle (OCP)
-*Software entities should be open for extension, but closed for modification.*
-- **Definition**: You should be able to extend a class's behavior without modifying it.
-- **Heuristic**: Use polymorphism. Instead of writing `if/switch` statements based on object types, create an abstraction and implement it differently.
-- **Violation Example**: A class calculating shipping costs that needs to be modified every time a new courier service is added.
+
+*Entidades de software devem ser abertas para extensão, mas fechadas para modificação.*
+
+- **Definição**: Você deve poder estender o comportamento de uma classe sem modificá-la.
+- **Heurística**: Use polimorfismo. Em vez de escrever `if/switch` baseados em tipos de objeto, crie uma abstração e implemente-a de formas diferentes.
+- **Exemplo de violação**: Uma classe que calcula custos de frete e precisa ser modificada toda vez que um novo serviço de entrega é adicionado.
 
 ## 3. Liskov Substitution Principle (LSP)
-*Objects in a program should be replaceable with instances of their subtypes without altering the correctness of that program.*
-- **Definition**: Subclasses must be substitutable for their base classes.
-- **Heuristic**: If an override method does nothing or throws an exception just because it's a subclass, you are probably violating LSP.
-- **Violation Example**: A `Square` class inheriting from `Rectangle` where setting the width also modifies the height, breaking the expectations of code working with `Rectangle`.
+
+*Objetos em um programa devem ser substituíveis por instâncias de seus subtipos sem alterar a correção do programa.*
+
+- **Definição**: Subclasses devem ser substituíveis por suas classes base.
+- **Heurística**: Se um método sobrescrito não faz nada ou lança exceção apenas por ser de uma subclasse, você provavelmente está violando o LSP.
+- **Exemplo de violação**: Uma classe `Square` herdando de `Rectangle` onde definir a largura também altera a altura, quebrando expectativas de código que trabalha com `Rectangle`.
 
 ## 4. Interface Segregation Principle (ISP)
-*Many client-specific interfaces are better than one general-purpose interface.*
-- **Definition**: Clients should not be forced to depend upon interfaces that they do not use.
-- **Heuristic**: Fat interfaces should be broken down into smaller, highly cohesive interfaces.
-- **Violation Example**: A monolithic `Worker` interface with `work()`, `eat()`, and `sleep()` methods implemented by a `Robot` class (robots don't eat or sleep).
+
+*Muitas interfaces específicas por cliente são melhores que uma interface generalista.*
+
+- **Definição**: Clientes não devem ser forçados a depender de interfaces que não utilizam.
+- **Heurística**: Interfaces gordas devem ser divididas em interfaces menores e altamente coesas.
+- **Exemplo de violação**: Uma interface monolítica `Worker` com métodos `work()`, `eat()` e `sleep()` implementada por uma classe `Robot` (robôs não comem nem dormem).
 
 ## 5. Dependency Inversion Principle (DIP)
-*Depend upon abstractions, not concretions.*
-- **Definition**: High-level modules should not depend on low-level modules. Both should depend on abstractions. Abstractions should not depend on details. Details should depend on abstractions.
-- **Heuristic**: Inject dependencies via constructors rather than instantiating concrete classes inside high-level modules.
-- **Violation Example**: A `PaymentService` class directly instantiating a `StripeClient` class.
+
+*Dependa de abstrações, não de implementações concretas.*
+
+- **Definição**: Módulos de alto nível não devem depender de módulos de baixo nível. Ambos devem depender de abstrações. Abstrações não devem depender de detalhes. Detalhes devem depender de abstrações.
+- **Heurística**: Injete dependências via construtores em vez de instanciar classes concretas dentro de módulos de alto nível.
+- **Exemplo de violação**: Uma classe `PaymentService` instanciando diretamente uma classe `StripeClient`.

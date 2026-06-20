@@ -1,0 +1,24 @@
+---
+description: "Padrões e convenções para código Java"
+globs: ["**/*.java"]
+alwaysApply: false
+---
+
+# Padrões Java RPE
+
+## Contexto
+
+Regras ativadas automaticamente ao editar arquivos `.java`. Complementa a skill `java-mastery`.
+
+## Instruções
+
+- Preferir Java moderno: records, sealed classes, pattern matching quando aplicável.
+- Injeção de dependência via construtor; evitar field injection.
+- Testcontainers para testes de integração com banco/serviços externos.
+- Nomenclatura: `PascalCase` classes, `camelCase` métodos/variáveis.
+- Exceções tipadas; nunca catch genérico sem tratamento.
+
+## Verificação
+
+- `./gradlew spotlessApply` ou `./mvnw spotless:apply`
+- `./gradlew test` ou `./mvnw test`

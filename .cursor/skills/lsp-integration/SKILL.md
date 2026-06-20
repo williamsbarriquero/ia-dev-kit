@@ -9,6 +9,7 @@ disable-model-invocation: true
 O LSP permite que o agente consulte o compilador da IDE diretamente para navegar de forma extremamente precisa em bases de código complexas e ler avisos/erros de compilação sem precisar rodar suítes de testes pesadas todas as vezes.
 
 ## Diretrizes de Navegação e Análise
+
 Ao analisar o codebase, o agente deve priorizar as seguintes interações nativas do LSP (quando disponíveis na IDE ou via ferramentas acopladas):
 
 1. **Go to Definition (Ir para Definição)**:
