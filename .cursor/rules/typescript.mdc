@@ -1,19 +1,18 @@
 ---
-description: "Regras e padrões para TypeScript"
+description: "Ativa padrões TypeScript por contexto (UI vs backend)"
 globs: ["**/*.ts", "**/*.tsx"]
 alwaysApply: false
 ---
+
 # Padrões TypeScript
 
-## Contexto
+## Ativação
 
-Regras ativadas automaticamente ao lidar com arquivos TypeScript.
+Ao editar arquivos `.ts` / `.tsx`:
 
-## Instruções
+- **UI (componentes, hooks, `.tsx`)**: leia **`frontend-mastery`** → `.cursor/knowledge/stacks/frontend.md`
+- **Backend Node**: leia **`node-mastery`** → `.cursor/knowledge/stacks/node.md`
 
-- **Strict Mode**: Uso do Strict mode é obrigatório (`strict: true` no `tsconfig.json`).
-- **Interfaces vs Types**: Priorizar `interface` sobre `type` para definições de objetos e contratos.
-- **Enums**: Preferir string literal unions ou `as const`; evitar `const enum` salvo consenso explícito do projeto.
-- **Assincronia**: Preferir `async/await` em vez de encadear `.then()`. Sempre envolver operações assíncronas em blocos `try/catch` tipados.
-- **Tipagem Avançada**: Usar Generics para reuso de código e utility types (`Partial`, `Pick`, `Omit`) em vez de definições manuais repetidas.
-- **Tipagem Segura**: Nunca usar `any`. Utilize `unknown` combinado com type narrowing.
+## Verificação
+
+Conforme `stack-baseline.mdc` → seção Node.js / TypeScript.

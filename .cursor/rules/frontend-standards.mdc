@@ -1,0 +1,17 @@
+---
+description: "Ativa padrões frontend ao editar componentes React/Next.js"
+globs: ["**/*.tsx", "**/*.jsx"]
+alwaysApply: false
+---
+
+# Padrões Frontend RPE
+
+## Ativação
+
+Ao editar componentes React/Next.js (`.tsx`, `.jsx`), leia a skill **`frontend-mastery`** — conteúdo canônico em `.cursor/knowledge/stacks/frontend.md`.
+
+Para utilitários `.ts` compartilhados, combine com `typescript.mdc` quando aplicável.
+
+## Verificação
+
+Conforme `stack-baseline.mdc` → seção Node.js / TypeScript.

@@ -1,22 +1,14 @@
 ---
-description: "Padrões e convenções para código Go"
+description: "Ativa padrões Go ao editar arquivos .go"
 globs: ["**/*.go"]
 alwaysApply: false
 ---
 
 # Padrões Go RPE
 
-## Contexto
+## Ativação
 
-Regras ativadas automaticamente ao editar arquivos `.go`. Complementa a skill `go-mastery`.
-
-## Instruções
-
-- Layout idiomático: `cmd/`, `internal/`, `pkg/` conforme escala do projeto.
-- Tratamento de erros explícito; nunca ignorar `err` com `_`.
-- Context para cancelamento e timeouts em operações I/O.
-- Concorrência segura com channels ou mutex; evitar race conditions.
-- Interfaces pequenas definidas pelo consumidor.
+Ao editar arquivos `.go`, leia a skill **`go-mastery`** — conteúdo canônico em `.cursor/knowledge/stacks/go.md`.
 
 ## Verificação
 

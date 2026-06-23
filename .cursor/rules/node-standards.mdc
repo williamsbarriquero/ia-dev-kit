@@ -1,0 +1,17 @@
+---
+description: "Ativa padrões Node.js ao editar arquivos backend JS/TS"
+globs: ["**/*.js", "**/*.mjs", "**/*.cjs"]
+alwaysApply: false
+---
+
+# Padrões Node.js RPE
+
+## Ativação
+
+Ao editar código Node.js (`.js`, `.mjs`, `.cjs`), leia a skill **`node-mastery`** — conteúdo canônico em `.cursor/knowledge/stacks/node.md`.
+
+Para TypeScript (`.ts`, `.tsx`), combine com `typescript.mdc`.
+
+## Verificação
+
+Conforme `stack-baseline.mdc` → seção Node.js / TypeScript.

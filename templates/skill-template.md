@@ -1,21 +1,22 @@
 ---
-name: skill-name
-description: "Descrição concisa do propósito desta skill."
-disable-model-invocation: false
+name: <stack>-mastery
+description: "<Descrição curta>. SSOT em knowledge/stacks/<stack>.md."
+disable-model-invocation: true
 ---
 
-# Nome da Skill
+# <Stack> Mastery
 
-## Propósito
+## Quando usar
 
-Descreva o contexto de uso desta skill.
+- Implementação ou revisão de código da stack
+- Acionada por `<stack>-standards.mdc`, agentes ou intent `infra`
 
-## Fluxo de Execução
+## SSOT (leitura obrigatória)
 
-1. Passo 1
-2. Passo 2
-3. Passo 3
+Antes de implementar ou revisar, leia integralmente:
 
-## Regras
+`.cursor/knowledge/stacks/<stack>.md`
 
-- Defina restrições ou validações obrigatórias para esta skill.
+## Verificação
+
+Conforme `stack-baseline.mdc` → seção correspondente.

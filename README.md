@@ -1,92 +1,77 @@
 # RPE Harness — Agentic Dev Kit
 
-O **RPE Harness** é um kit de desenvolvimento de IA de nível corporativo projetado para o Cursor IDE (e compatível com outras IDEs via especificação [agents.md](./agents.md)). Ele fornece uma infraestrutura de orquestração determinística que encapsula modelos de linguagem, mitigando alucinações e garantindo que o código gerado siga os padrões de arquitetura, segurança e qualidade da RPE.
+O **RPE Harness** é um kit de desenvolvimento de IA de nível corporativo para o **Cursor IDE**. Fornece orquestração determinística via agentes especializados, hooks, regras modulares e automação iterativa (UltraWork).
 
-Inspirado nos conceitos avançados do **Oh My OpenAgent**, este harness implementa roteamento por intenção (IntentGate), persistência de sessão (Boulder System), ganchos de ciclo de vida em 3 camadas, prompts otimizados por modelo e automação de testes iterativa (UltraWork).
+Inspirado no **Oh My OpenAgent**, implementa roteamento por intenção (IntentGate), persistência de sessão (scratchpad), ganchos de ciclo de vida e TDD guiado por agentes.
 
 ---
 
-## 🚀 Quick Start
-
-A forma recomendada de instalar o RPE Harness em qualquer novo repositório alvo é executando o script de instalação automatizado fornecido na pasta `scripts/`:
+## Quick Start
 
 ```bash
-./scripts/install.sh /caminho/para/seu/projeto/
+git clone https://gitlab.rpe.tech/rpe-bus/rpe-vertical/chapter-backend/ai-engineering/ai-dev-kit
+bash ai-dev-kit/scripts/install.sh --java /caminho/para/seu/projeto
+cd /caminho/para/seu/projeto && ./scripts/validate.sh
 ```
 
-O script criará a estrutura de diretórios necessária e copiará todas as regras modulares, agentes especialistas, comandos rápidos, hooks locais, skills e configurações de MCP para o seu projeto.
+**Stacks:** use `--java`, `--go`, `--node`, `--react` (combináveis) ou `--stack java,react`. Sem flags, instala todas.
+
+**Pré-requisitos:** Cursor 3+, Git, test runner da stack, Node/npx (MCP opcional). **Bun** (UltraWork) é instalado automaticamente pelo `install.sh` quando o módulo `hooks` está incluído; use `--skip-bun` para pular.
 
 ---
 
-## 📂 Estrutura de Diretórios do Harness
-
-O RPE Harness é modular e organizado de forma plana e limpa nas seguintes camadas:
+## Estrutura do Harness (SSOT)
 
 ```text
-ai-dev-kit/
+ia-dev-kit/
 ├── .cursor/
-│   ├── rules/                       # Regras modulares (.mdc) aplicadas contextualmente (sem prefixo de números)
-│   │   ├── rpe-identity.mdc         # Identidade básica do agente
-│   │   ├── coding-standards.mdc     # Padrões de código limpo corporativo
-│   │   ├── safety-guardrails.mdc    # Bloqueios a inputs perigosos e vazamento de chaves
-│   │   ├── intent-routing.mdc       # Roteamento de intenções (IntentGate) e acionamento UltraWork
-│   │   ├── interaction-standards.mdc# Formato padrão de respostas estruturadas dos agentes (OmO style)
-│   │   ├── typescript.mdc           # Regras específicas de lint e tipagem do TypeScript
-│   │   ├── git-conventions.mdc      # Padrão de escrita e commits Git
-│   │   ├── testing-standards.mdc    # Padrão corporativo para unitários e mocks
-│   │   ├── tdd-workflow.mdc         # Regras para conduzir o ciclo TDD
-│   │   ├── code-review.mdc          # Regras para revisão estática de PRs
-│   │   ├── qa-standards.mdc         # Regras para asserções e seletores resilientes em testes
-│   │   ├── ultrawork.mdc            # Modo de desenvolvimento autônomo com auto-correção
-│   │   └── database-migrations.mdc  # Regras para escrita de SQL segura e rollback
-│   ├── agents/                      # Subagentes especializados (invocados via @ no Cursor)
-│   │   ├── rpe-architect.md         # Planejador sem permissão de escrita
-│   │   ├── rpe-developer.md         # Implementador com acesso a edição e bash
-│   │   ├── rpe-reviewer.md          # Revisor estático de código
-│   │   ├── rpe-security.md          # Especialista DevSecOps (NIST/OWASP/SLSA)
-│   │   ├── rpe-tech-writer.md       # Especialista em escrita técnica e OpenAPI
-│   │   ├── rpe-atlassian.md         # Especialista em Jira e Confluence
-│   │   ├── rpe-sdet.md              # Automatizador de testes E2E e APIs
-│   │   ├── rpe-qa-analyst.md        # Elaborador de plano de testes e BDD
-│   │   ├── rpe-test-lead.md         # Líder do fluxo TDD unitário
-│   │   └── rpe-tester.md            # Executor de testes unitários do TDD
-│   ├── commands/                    # Comandos rápidos de prompt (invocados via @ no Chat)
-│   │   ├── audit-security.md        # Varredura de credenciais e OWASP Top 10
-│   │   ├── review-pr.md             # Auditoria geral de PRs
-│   │   ├── validate-stack.md        # Pipeline local de lint e testes
-│   │   ├── generate-test-cases.md   # Criação automática de testes de caminhos e limites
-│   │   ├── generate-pr-description.md # Criação automática de descrições de PR a partir do git diff
-│   │   ├── refine-story.md          # Refinamento de histórias Jira sob o método Três Amigos
-│   │   ├── generate-mocks.md        # Geração rápida de dublês de teste MSW/WireMock
-│   │   └── audit-logs-otel.md       # Auditoria de logs, OpenTelemetry e LGPD
-│   ├── hooks/                       # Barreiras locais determinísticas executadas fora do LLM
-│   │   ├── guards/                  # Bloqueios (secret-scanner e write-file-guard)
-│   │   ├── transforms/              # Formatações automáticas pós-salvamento
-│   │   └── continuations/           # Script grind-loop para auto-correção de testes
-│   ├── skills/                      # Conhecimento técnico aprofundado sob demanda do agente
-│   │   ├── hexagonal-architecture/  # Guia Ports & Adapters
-│   │   ├── go-mastery/              # Go idiomático
-│   │   ├── java-mastery/            # Java Moderno e JVM
-│   │   ├── bdd-gherkin/             # Escrita de cenários BDD estáveis
-│   │   └── ... (outras 9 skills de arquitetura, linguagens e QA)
-│   ├── hooks.json                   # Registro central de ganchos do Cursor
-│   └── mcp.json                     # Integração com APIs externas (Model Context Protocol)
-├── scripts/                         # Ferramentas de ciclo de vida (install.sh, validate.sh, update.sh)
-├── templates/                       # Templates padrão para criação de novos agentes, regras ou skills
-└── agents.md                        # Baseline universal para conformidade em multi-IDEs (Claude Code, Aider)
+│   ├── rules/          # 17 regras .mdc
+│   ├── agents/         # 12 agentes rpe-*
+│   ├── commands/       # 15 comandos @
+│   ├── skills/         # 16 skills (índices → knowledge)
+│   ├── knowledge/      # SSOT por stack (java, go, node)
+│   ├── hooks/          # guards, transforms, continuations
+│   ├── hooks.json
+│   ├── mcp.json.example
+│   └── scratchpad.template.md
+├── scripts/            # install.sh, validate.sh, update.sh, lib/stack-manifest.sh
+├── templates/          # templates para novos artefatos
+├── docs/
+│   ├── harness-guide.md           # SSOT operacional
+│   ├── confluence-how-to-guide.md # How-to (base Confluence)
+│   └── agentic-harness.md         # fundamentação teórica
+├── agents.md                      # baseline universal (DoD, stack, comunicação)
+└── agents.override.md.example     # template de overrides locais
 ```
 
+### Agentes (12)
+
+`rpe-architect`, `rpe-developer`, `rpe-reviewer`, `rpe-security`, `rpe-qa-analyst`, `rpe-test-lead`, `rpe-tester`, `rpe-sdet`, `rpe-tech-writer`, `rpe-atlassian`, `rpe-infra`, `rpe-dba`
+
+### Commands (15)
+
+`ultrawork`, `plan-architecture`, `test-plan`, `validate-stack`, `review-pr`, `generate-pr-description`, `refine-story`, `generate-test-cases`, `generate-mocks`, `scaffold-e2e`, `scaffold-k6`, `review-migration`, `generate-openapi`, `audit-security`, `audit-logs-otel`
+
+### Rules (18)
+
+Always-on: `rpe-identity`, `interaction-standards`, `coding-standards`, `intent-routing`, `safety-guardrails`, `stack-baseline`
+
+Contextuais: `typescript`, `frontend-standards`, `go-standards`, `java-standards`, `node-standards`, `database-migrations`, `observability`, `testing-standards`, `qa-standards`, `tdd-workflow`, `code-review`, `git-conventions`, `ultrawork`
+
 ---
 
-## 📚 Documentação Completa
+## Documentação
 
-Para aprofundar seu conhecimento sobre o funcionamento e o ciclo de vida do harness, leia:
-
-1.  [Guia Completo do Desenvolvedor](docs/harness-guide.md) — O manual prático contendo todas as tabelas de agentes, comandos e comandos de execução.
-2.  [Pesquisa: Agentic Harness](docs/agentic-harness.md) — A base de fundamentação teórica de engenharia de contexto por trás deste harness.
+| Documento | Conteúdo |
+|-----------|----------|
+| [harness-guide.md](docs/harness-guide.md) | SSOT — agentes, commands, hooks, MCP, instalação |
+| [confluence-how-to-guide.md](docs/confluence-how-to-guide.md) | How-to passo a passo para desenvolvedores |
+| [content-centralization.md](docs/content-centralization.md) | SSOT — como centralizar rules, skills e commands |
+| [agentic-harness.md](docs/agentic-harness.md) | Fundamentação teórica |
+| [agents.md](agents.md) | Baseline universal e Definition of Done |
 
 ---
 
-## 🛠️ Contribuindo
+## Contribuindo
 
-Para adicionar novas regras, agentes ou skills a este kit de desenvolvimento, utilize sempre os padrões contidos na pasta `templates/` e lembre-se de rodar `./scripts/validate.sh` localmente antes de submeter suas alterações.
+Use os templates em `templates/` e execute `./scripts/validate.sh` antes de submeter alterações.

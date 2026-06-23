@@ -1,0 +1,57 @@
+# Local Overrides — agents.override.md
+
+> Copie para `agents.override.md` na raiz do projeto. O arquivo real é **gitignored** e complementa (não substitui) [agents.md](./agents.md).
+>
+> ```bash
+> cp agents.override.md.example agents.override.md
+> ```
+
+Use para configurações locais que não devem ir para o repositório: portas, URLs de staging, flags de teste, comandos customizados da sua máquina.
+
+---
+
+## Stack do Projeto (override local)
+
+| Item | Valor |
+|------|-------|
+| **Stack principal** | _[opcional — sobrescreve agents.md]_ |
+| **Runtime / build** | _[opcional]_ |
+| **Test runner** | _[opcional — ex. `npm test -- --watch=false`]_ |
+| **Porta local** | _[ex. 3001 em vez de 3000]_ |
+| **Variáveis de ambiente** | _[ex. `DATABASE_URL` apontando para Docker local]_ |
+
+---
+
+## Arquitetura (override local)
+
+Decisões ou exceções válidas apenas no seu ambiente de desenvolvimento.
+
+- _[ex. usar mock de pagamento em dev; adapter in-memory para filas]_
+
+---
+
+## Restrições (override local)
+
+- _[ex. não executar migrações destrutivas contra banco compartilhado de QA]_
+- _[ex. limitar testes E2E a subset local por tempo de execução]_
+
+---
+
+## Verificação (override local)
+
+Comandos alternativos quando o baseline não se aplica à sua máquina:
+
+```bash
+# Exemplo Node — testes sem watch
+# npm test -- --runInBand
+
+# Exemplo Java — perfil local
+# ./mvnw test -Plocal
+```
+
+---
+
+## Notas
+
+- Agentes devem ler `agents.md` **e** `agents.override.md` (se existir); overrides prevalecem em conflito.
+- Não commite `agents.override.md` — mantenha apenas este `.example` versionado.

@@ -1,15 +1,17 @@
 ---
-description: "<Descreva quando esta regra deve ser ativada>"
-globs: ["**/*.ext"]      # Remover se alwaysApply: true
-alwaysApply: false        # true para regras core, false para contextuais
+description: "<Quando esta regra ativa — ex.: ao editar arquivos .java>"
+globs: ["**/*.ext"]
+alwaysApply: false
 ---
-# Nome da Regra
+# Padrões <Stack> RPE
 
-## Contexto
-<!-- Quando e por que esta regra existe -->
+## Ativação
 
-## Instruções (Command-First)
-<!-- Comandos e regras concretas, não abstratas -->
+Ao editar arquivos matching o glob, leia a skill **`<stack>-mastery`** — conteúdo canônico em `.cursor/knowledge/stacks/<stack>.md`.
 
 ## Verificação
-<!-- Comandos de validação com exit codes esperados -->
+
+<!-- Apenas comandos; não duplicar conteúdo técnico. Preferir referência a stack-baseline.mdc -->
+
+- `<comando lint>`
+- `<comando test>`
