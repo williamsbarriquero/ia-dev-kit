@@ -33,15 +33,16 @@ ia-dev-kit/
 │   ├── hooks/          # guards, transforms, continuations
 │   ├── hooks.json
 │   ├── mcp.json.example
+│   ├── mcp.json.example
+│   ├── docs/specs/     # SSOT de specs por feature
 │   └── scratchpad.template.md
 ├── scripts/            # install.sh, validate.sh, update.sh, lib/stack-manifest.sh
-├── templates/          # templates para novos artefatos
+├── templates/          # feature-spec, technical-spec, definition-of-done
 ├── docs/
 │   ├── harness-guide.md           # SSOT operacional
 │   ├── confluence-how-to-guide.md # How-to (base Confluence)
 │   └── agentic-harness.md         # fundamentação teórica
-├── agents.md                      # baseline universal (DoD, stack, comunicação)
-└── agents.override.md.example     # template de overrides locais
+└── agents.md                      # baseline universal (DoD, stack, comunicação)
 ```
 
 ### Agentes (12)

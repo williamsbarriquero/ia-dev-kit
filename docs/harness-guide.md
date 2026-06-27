@@ -62,7 +62,8 @@ Invoque com `@` no chat ou Composer:
 Automação total com auto-correção via `grind-loop.ts`.
 
 - **Acionar**: prefixo `ultrawork:`, palavra `ultrawork`, ou `@ultrawork.md`
-- **Scratchpad**: `.cursor/scratchpad.md` (template: `.cursor/scratchpad.template.md`)
+- **Scratchpad**: `.cursor/scratchpad.md` (template: `.cursor/scratchpad.template.md`) — estado de sessão
+- **Specs**: `.cursor/docs/specs/` — SSOT versionado por feature (`<slug>.md` + `<slug>-technical.md`)
 - **Limite**: 5 iterações automáticas
 - **Requer**: Bun no PATH (instalado automaticamente pelo `install.sh` com módulo `hooks`)
 
@@ -166,14 +167,13 @@ A instalação copia:
 
 - **Harness core** (sempre): agentes, commands, hooks, regras globais, skills universais
 - **Por stack** (conforme flags): rules contextuais, skills `*-mastery`, knowledge em `stacks/`
-- `agents.md`, `agents.override.md.example`, scratchpad template e `scratchpad.md`
+- `agents.md`, scratchpad template e `scratchpad.md`
+- `.cursor/docs/specs/` e templates (`feature-spec.md`, `technical-spec.md`, `definition-of-done.md`)
 - `scripts/` (`install.sh`, `validate.sh`, `update.sh`, `lib/stack-manifest.sh`)
 - `.cursor/harness-stacks.json` (registro das stacks instaladas)
 - `.cursor/mcp.json` (criado do example, se ausente)
 
 **Atualização:** `update.sh` reaplica as stacks de `harness-stacks.json` por padrão. Use flags para mudar o escopo.
-
-**Overrides locais:** copie `agents.override.md.example` → `agents.override.md` (gitignored).
 
 **Repositório canônico:**
 

@@ -94,7 +94,8 @@ bash ai-dev-kit/scripts/install.sh --java .
 - Cópia do **harness core** (agentes, commands, hooks, regras globais, skills universais)
 - Cópia **seletiva** de rules, skills e knowledge conforme as flags de stack
 - Registro das stacks em `.cursor/harness-stacks.json`
-- Cópia de `agents.md`, `agents.override.md.example` e scratchpad
+- Cópia de `agents.md` e scratchpad
+- Criação de `.cursor/docs/specs/` e templates em `.cursor/templates/` (`feature-spec.md`, `technical-spec.md`, `definition-of-done.md`)
 - Criação de `.cursor/mcp.json` a partir do template (se ausente — não sobrescreve existente)
 - Permissões de execução nos hooks shell
 - **Instalação do Bun** (se módulo `hooks` incluído e `--skip-bun` não informado)
@@ -120,8 +121,6 @@ No projeto alvo:
 ```text
 /seu-projeto/
 ├── agents.md                    ← baseline universal (stack, DoD, comunicação)
-├── agents.override.md.example   ← template de overrides locais (versionado)
-├── agents.override.md           ← opcional, gitignored (copie do .example)
 ├── scripts/
 │   ├── install.sh
 │   ├── validate.sh
@@ -140,8 +139,14 @@ No projeto alvo:
     ├── hooks.json
     ├── harness-stacks.json        ← stacks instaladas (java, go, node, react)
     ├── mcp.json                 ← criado do example (opcional)
+    ├── docs/
+    │   └── specs/               ← specs versionadas por feature (SSOT)
+    ├── templates/
+    │   ├── feature-spec.md      ← template spec de negócio/comportamento
+    │   ├── technical-spec.md    ← template spec técnica (contratos)
+    │   └── definition-of-done.md
     ├── scratchpad.template.md
-    └── scratchpad.md            ← sessão UltraWork/TDD
+    └── scratchpad.md            ← estado de sessão (gitignored) — não substitui specs
 ```
 
 ---
@@ -174,10 +179,6 @@ Este projeto acabou de receber o RPE Harness. Configure o agents.md — não esc
 6. Remova blocos **Referência — ia-dev-kit** se não aplicáveis a este repositório
 
 7. Liste o que foi configurado e o que ainda precisa de input humano
-
-Opcional — overrides locais (não versionados):
-   cp agents.override.md.example agents.override.md
-   Preencha apenas o que difere da sua máquina (portas, flags de teste, URLs locais).
 ```
 
 **Como o Cursor carrega contexto (Cursor 3):**
@@ -186,7 +187,6 @@ Opcional — overrides locais (não versionados):
 - Regras **contextuais** ativam por extensão de arquivo (ex.: `java-standards.mdc` ao editar `*.java`) e apontam para a skill da stack, cujo conteúdo canônico está em `.cursor/knowledge/stacks/`.
 - **Busca no repositório:** no Agent mode, o Cursor indexa o workspace aberto e busca semanticamente — não há `@Codebase`. Na prática, **não anexe a pasta raiz em todo prompt**; descreva a intenção e deixe o Agent localizar. Use `@Files` / `@Folders` (menu **Files & Folders** no `@`) quando souber o escopo ou quiser forçar contexto explícito.
 - Para contexto adicional do harness, use `@agents.md` ou `@java-mastery` (e equivalentes `go-mastery`, `node-mastery`) no prompt.
-- Overrides locais: copie `agents.override.md.example` → `agents.override.md` (gitignored); complementa o baseline sem alterar o versionado.
 
 Detalhamento da centralização rules/skills/knowledge: [content-centralization.md](./content-centralization.md).
 
@@ -221,22 +221,97 @@ Skill complementar: `@hexagonal-architecture` (ports & adapters).
 
 ---
 
-## Passo 3: Plano técnico e especificação
+## Onde vivem as especificações (governança)
 
-Peça plano atômico antes dos testes:
+O fluxo original (TSDD / AI Dev Kit) define **`.cursor/docs/specs/`** como lugar canônico das specs — versionado no Git, referenciado em todos os passos (testes, implementação, revisão). O `scratchpad` é apenas estado de sessão.
+
+| Artefato | Onde grava | Escopo | Versionado? |
+|----------|------------|--------|-------------|
+| **Baseline do projeto** | `agents.md` | Stack, arquitetura, restrições, DoD | Sim (Git) |
+| **Spec de feature** | `.cursor/docs/specs/<slug>.md` | Capacidades, componentes, critérios de aceite (níveis 1–3) | Sim (Git) |
+| **Spec técnica** | `.cursor/docs/specs/<slug>-technical.md` | Contratos, DTOs, schemas (nível 4) — alimenta testes | Sim (Git) |
+| **Templates** | `.cursor/templates/` | `feature-spec.md`, `technical-spec.md`, `definition-of-done.md` | Sim (Git) |
+| **Rascunho de sessão** | `.cursor/scratchpad.md` | Fase, testes, `ALL_TESTS_PASSED` | Não (gitignored) |
+| **Espelho Confluence** (opcional) | Página no space do chapter | Visibilidade para o time; link no Jira | Sim (Confluence) |
+
+### Dois arquivos por feature
 
 ```text
-@rpe-test-lead.md @test-plan.md @agents.md
-
-Com base no design aprovado, gere o plano TDD:
-- Ordem dos testes (P0 → P1)
-- Arquivos a criar/alterar
-- Critérios de aceite verificáveis
-
-Registre no scratchpad: .cursor/scratchpad.md
+.cursor/docs/specs/
+├── README.md
+├── forgot-password.md              ← aprovação explícita antes de codificar
+└── forgot-password-technical.md    ← insumo direto para @rpe-tester.md
 ```
 
-**Regra de não-edição manual:** se a IA errar depois, **atualize o plano/spec** e regenere — não corrija código manualmente contornando o fluxo.
+| Arquivo | Origem (níveis de design) | Próximo passo |
+|---------|---------------------------|---------------|
+| `<slug>.md` | 1–3 (capacidades → interações) | Aprovação → gerar `-technical.md` |
+| `<slug>-technical.md` | 4 (contratos) | `@test-plan.md` → testes RED |
+
+### Fluxo: design → spec persistida
+
+**1. Design (Plan Mode)** — níveis 1–4 sem código:
+
+```text
+@rpe-architect.md @plan-architecture.md @agents.md
+
+Preciso adicionar "esqueci minha senha" ao módulo de autenticação.
+Nível 1 — Capacidades: quais comportamentos? Sem código.
+```
+
+**2. Gerar specs (Act Mode)** — gravar em `.cursor/docs/specs/`:
+
+```text
+@rpe-architect.md @agents.md @.cursor/templates/feature-spec.md @.cursor/templates/technical-spec.md
+
+Com base no design aprovado, gere os dois documentos:
+
+1. .cursor/docs/specs/forgot-password.md — comportamentos e componentes
+2. .cursor/docs/specs/forgot-password-technical.md — interfaces, DTOs, schemas
+
+Use os templates como estrutura. NÃO escreva código de implementação.
+```
+
+A `<slug>.md` requer **aprovação explícita** antes de prosseguir. A `<slug>-technical.md` alimenta os testes na fase RED.
+
+**3. Confluence (opcional)** — espelho para o time via `@rpe-atlassian.md`:
+
+```text
+@rpe-atlassian.md @.cursor/docs/specs/forgot-password.md
+
+Publique resumo no Confluence e vincule ao ticket Jira FEATURE-XXX.
+```
+
+**Regra de drift:** atualize os arquivos em `.cursor/docs/specs/` como commits de primeira classe — não corrija código manualmente contornando a spec.
+
+---
+
+## Passo 3: Escreva a especificação técnica
+
+Após a conversa de design (Passo 2), gere e **persista** os documentos de spec. Ainda no fluxo de planejamento — sem implementação.
+
+```text
+@rpe-architect.md @agents.md @.cursor/templates/feature-spec.md @.cursor/templates/technical-spec.md
+
+Com base na conversa de design, gere:
+
+1. .cursor/docs/specs/forgot-password.md
+2. .cursor/docs/specs/forgot-password-technical.md
+
+Use os templates. NÃO escreva código de implementação.
+```
+
+Em seguida, derive o plano TDD a partir da spec técnica:
+
+```text
+@rpe-test-lead.md @test-plan.md @agents.md @.cursor/docs/specs/forgot-password-technical.md
+
+Gere o plano TDD (ordem P0 → P1, arquivos, critérios verificáveis).
+Atualize a seção 5 de forgot-password-technical.md.
+Registre estado da sessão em .cursor/scratchpad.md (não substitui a spec).
+```
+
+**Regra de não-edição manual:** se a IA errar depois, **atualize a spec** em `.cursor/docs/specs/` e regenere — não corrija código manualmente contornando o fluxo.
 
 ---
 
@@ -245,11 +320,11 @@ Registre no scratchpad: .cursor/scratchpad.md
 Act Mode (`Cmd+I`):
 
 ```text
-@rpe-tester.md @agents.md
+@rpe-tester.md @agents.md @.cursor/docs/specs/forgot-password-technical.md
 
 Escreva testes unitários e de integração para "esqueci minha senha".
 Todos devem FALHAR — implementação ainda não existe.
-Cubra critérios de aceite e edge cases do plano.
+Cubra critérios de aceite e edge cases da spec técnica.
 ```
 
 Confirme RED imediatamente:
@@ -274,7 +349,7 @@ Skill: `tdd-grinder` (integração com grind-loop).
 ## Passo 5: Implementação até GREEN
 
 ```text
-@rpe-developer.md @agents.md @java-mastery
+@rpe-developer.md @agents.md @java-mastery @.cursor/docs/specs/forgot-password-technical.md
 
 Implemente o código mínimo para todos os testes passarem.
 Ordem hexagonal: domain → ports → use case → adapters.
@@ -311,13 +386,21 @@ Validação consolidada:
 Plan Mode:
 
 ```text
-@rpe-reviewer.md @review-pr.md @agents.md
+@rpe-reviewer.md @review-pr.md @agents.md @.cursor/docs/specs/forgot-password.md
 
 Revise a feature "esqueci minha senha" em 4 eixos:
-1. Conformidade com o plano/spec
+1. Conformidade com a spec (.cursor/docs/specs/)
 2. Arquitetura (agents.md)
 3. Qualidade dos testes
 4. Segurança (credenciais, PII, validação de input)
+```
+
+Checklist de fechamento:
+
+```text
+@.cursor/templates/definition-of-done.md
+
+Verifique o Definition of Done para a feature.
 ```
 
 Descrição do PR:
@@ -351,7 +434,7 @@ Descrição do PR:
 | Recurso Cursor | Quando usar | Exemplo |
 |----------------|-------------|---------|
 | Busca semântica (Agent mode) | Equivalente ao antigo `@Codebase` — exploração ampla | "Como fazemos paginação?" (sem anexar pasta) |
-| `@Folders` (Files & Folders) | Escopo explícito — pasta ou subpasta | `@src/auth/` ou raiz do projeto via `@` → Files & Folders |
+| `@Folders` (Files & Folders) | Escopo explícito — pasta ou subpasta | `@src/auth/`, `@.cursor/docs/specs/` |
 | `@Files` (Files & Folders) | Arquivo específico | `@package.json`, `@src/auth/auth.service.ts` |
 | `@Docs` | Documentação indexada (APIs externas) | `@Docs stripe` |
 | `@Terminals` | Output de comandos | Após falha em testes ou build |
@@ -382,18 +465,18 @@ Use **Background Agents** (Cursor 3+) com worktrees Git isoladas.
 **Agente 1 — Planejador:**
 
 ```text
-@rpe-architect.md @agents.md
+@rpe-architect.md @agents.md @.cursor/docs/specs/
 
-Monitore o plano conforme a feature evolui.
+Monitore as specs conforme a feature evolui.
 Sinalize decisões que contradigam agents.md.
 ```
 
 **Agente 2 — Executor:**
 
 ```text
-@rpe-developer.md @agents.md
+@rpe-developer.md @agents.md @.cursor/docs/specs/payment-processing-technical.md
 
-Implemente PaymentProcessingUseCase conforme spec.
+Implemente PaymentProcessingUseCase conforme a spec técnica.
 Execute testes após cada arquivo. Não toque outros módulos.
 ```
 
@@ -474,7 +557,9 @@ O `mcp.json` local é gitignored. Detalhes: [harness-guide.md §5](./harness-gui
 
 ## Armadilhas comuns
 
-**Drift de especificação** — Atualize `agents.md` e scratchpad quando aceitar decisões arquiteturais surpreendentes.
+**Drift de especificação** — Atualize os arquivos em `.cursor/docs/specs/` (e `agents.md` se for decisão transversal). Trate updates de spec como commits de primeira classe.
+
+**Spec só no scratchpad ou no chat** — O scratchpad é gitignored. Spec canônica = `.cursor/docs/specs/<slug>.md` + `<slug>-technical.md`.
 
 **Sobre-especificação precoce** — Especifique o suficiente para o próximo teste RED.
 
@@ -491,21 +576,24 @@ O `mcp.json` local é gitignored. Detalhes: [harness-guide.md §5](./harness-gui
 │  CICLO RPE HARNESS                                          │
 │                                                             │
 │  1. DESIGN (Plan Mode)                                      │
-│     └─ @rpe-architect.md + @plan-architecture.md            │
+│     └─ @rpe-architect.md → níveis 1–4 de design            │
 │                                                             │
-│  2. PLANO TDD                                               │
+│  2. SPEC (Act Mode)                                         │
+│     └─ .cursor/docs/specs/<slug>.md + -technical.md         │
+│                                                             │
+│  3. PLANO TDD                                               │
 │     └─ @rpe-test-lead.md + @test-plan.md                    │
 │                                                             │
-│  3. TESTES RED (Act Mode)                                   │
+│  4. TESTES RED (Act Mode)                                   │
 │     └─ @rpe-tester.md → confirmar falha                     │
 │                                                             │
-│  4. IMPLEMENTAR GREEN (Act Mode)                            │
+│  5. IMPLEMENTAR GREEN (Act Mode)                            │
 │     └─ @rpe-developer.md → testes verdes                    │
 │                                                             │
-│  5. REFATORAR (Act Mode)                                    │
+│  6. REFATORAR (Act Mode)                                    │
 │     └─ @rpe-developer.md + @validate-stack.md               │
 │                                                             │
-│  6. REVISAR (Plan Mode)                                     │
+│  7. REVISAR (Plan Mode)                                     │
 │     └─ @rpe-reviewer.md + @review-pr.md → PR                │
 └─────────────────────────────────────────────────────────────┘
 ```
@@ -516,10 +604,10 @@ O `mcp.json` local é gitignored. Detalhes: [harness-guide.md §5](./harness-gui
 
 - [ ] `install.sh` executado e `validate.sh` passou
 - [ ] `agents.md` configurado (**Stack do Projeto**, **Arquitetura**, **Restrições**)
-- [ ] `agents.override.md` criado localmente (opcional, a partir do `.example`)
 - [ ] Bun no PATH (automático via `install.sh` com hooks, ou manual se `--skip-bun`)
-- [ ] `scratchpad.md` criado a partir do template
+- [ ] `scratchpad.md` criado (estado de sessão — não substitui specs)
 - [ ] Design iniciado com `@rpe-architect.md` no Plan Mode
+- [ ] **Dois documentos de spec** em `.cursor/docs/specs/` (`<slug>.md` aprovado + `<slug>-technical.md`)
 - [ ] Plano TDD com `@test-plan.md` / `@rpe-test-lead.md`
 - [ ] Testes RED confirmados antes de implementar
 - [ ] `@validate-stack.md` passou (exit 0)
@@ -535,3 +623,7 @@ O `mcp.json` local é gitignored. Detalhes: [harness-guide.md §5](./harness-gui
 | [content-centralization.md](./content-centralization.md) | Centralização rules/skills/knowledge |
 | [agentic-harness.md](./agentic-harness.md) | Fundamentação teórica |
 | [agents.md](../agents.md) | Baseline universal e Definition of Done |
+| [.cursor/docs/specs/README.md](../.cursor/docs/specs/README.md) | Convenção do diretório de specs |
+| [templates/feature-spec.md](../templates/feature-spec.md) | Template spec de feature (níveis 1–3) |
+| [templates/technical-spec.md](../templates/technical-spec.md) | Template spec técnica (nível 4 — contratos) |
+| [templates/definition-of-done.md](../templates/definition-of-done.md) | Checklist de fechamento por feature |

@@ -176,6 +176,18 @@ install_knowledge() {
   echo "   Knowledge: ${#INSTALL_KNOWLEDGE[@]} arquivo(s)"
 }
 
+install_specs_and_templates() {
+  mkdir -p "$TARGET_DIR/.cursor/docs/specs"
+  mkdir -p "$TARGET_DIR/.cursor/templates"
+  cp "$ROOT_DIR/.cursor/docs/specs/README.md" "$TARGET_DIR/.cursor/docs/specs/README.md"
+  cp \
+    "$ROOT_DIR/templates/feature-spec.md" \
+    "$ROOT_DIR/templates/technical-spec.md" \
+    "$ROOT_DIR/templates/definition-of-done.md" \
+    "$TARGET_DIR/.cursor/templates/"
+  echo "   Specs: .cursor/docs/specs/ + templates (feature-spec, technical-spec)"
+}
+
 install_module() {
   local module="$1"
   case "$module" in
@@ -224,12 +236,13 @@ if [ "$MODULES" = "all" ]; then
   for mod in rules agents commands hooks skills knowledge mcp scripts; do
     install_module "$mod"
   done
-  cp "$ROOT_DIR/agents.md" "$ROOT_DIR/agents.override.md.example" "$TARGET_DIR/"
+  cp "$ROOT_DIR/agents.md" "$TARGET_DIR/"
   mkdir -p "$TARGET_DIR/.cursor"
   cp "$ROOT_DIR/.cursor/scratchpad.template.md" "$TARGET_DIR/.cursor/scratchpad.template.md"
   if [ ! -f "$TARGET_DIR/.cursor/scratchpad.md" ]; then
     cp "$ROOT_DIR/.cursor/scratchpad.template.md" "$TARGET_DIR/.cursor/scratchpad.md"
   fi
+  install_specs_and_templates
   write_harness_stacks_json "$TARGET_DIR"
 else
   SHOULD_WRITE_STACKS=false

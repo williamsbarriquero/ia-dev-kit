@@ -65,11 +65,21 @@ done
 
 check_file ".cursor/hooks.json"
 check_file "agents.md"
-check_file "agents.override.md.example"
 check_file "scripts/validate.sh"
 check_file "scripts/lib/stack-manifest.sh"
 check_file ".cursor/scratchpad.template.md"
 check_file ".cursor/hooks/continuations/grind-loop.ts"
+check_dir ".cursor/docs/specs"
+check_file ".cursor/docs/specs/README.md"
+check_file "templates/feature-spec.md"
+check_file "templates/technical-spec.md"
+check_file "templates/definition-of-done.md"
+
+if [ "$IS_KIT_SOURCE" = false ]; then
+  check_dir ".cursor/templates"
+  check_file ".cursor/templates/feature-spec.md"
+  check_file ".cursor/templates/technical-spec.md"
+fi
 
 if [ "$IS_KIT_SOURCE" = true ]; then
   check_file ".cursor/mcp.json.example"

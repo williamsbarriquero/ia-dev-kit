@@ -99,4 +99,4 @@ fi
 
 bash "$ROOT_DIR/scripts/install.sh" "${INSTALL_ARGS[@]}" "$TARGET_DIR"
 
-echo "✅ Harness atualizado. agents.override.md e mcp.json locais foram preservados (não sobrescritos)."
+echo "✅ Harness atualizado. mcp.json local foi preservado (não sobrescrito)."

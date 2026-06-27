@@ -118,15 +118,3 @@ Para garantir clareza, rastreabilidade e evitar poluição visual, todo agente d
    * `## 💻 Execução`: Implementação real do código ou saída de comandos.
    * `## ✅ Verificação`: Como a alteração foi validada localmente (testes, linters, etc.).
    * `## 📌 Status e Próximos Passos`: O estado final e ações requeridas do usuário.
-
----
-
-## Local Overrides
-
-Para configurações específicas da máquina local (portas, flags de teste, comandos customizados da stack):
-
-```bash
-cp agents.override.md.example agents.override.md
-```
-
-O arquivo `agents.override.md` é gitignored e **complementa** (não substitui) este baseline. Template versionado: [agents.override.md.example](agents.override.md.example).

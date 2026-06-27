@@ -306,8 +306,6 @@ A task is physically considered complete if and only if all the following verifi
 2. Execution of `pytest -v` completes with zero failures.
 3. Git state is validated, and any modifications have been committed with conventional messaging.
 
-Para dar suporte a ambientes de desenvolvimento heterogêneos com especificidades locais de rede ou variáveis de ambiente de teste personalizadas sem corromper as regras versionadas do repositório, a especificação prevê a leitura automatizada de um arquivo de substituição denominado `agents.override.md`. Esse arquivo deve ser mantido na lista de exclusões do controle de versão (`.gitignore`), permitindo ao desenvolvedor local customizar os comandos de compilação sem afetar a baseline do restante do time de engenharia.
-
 A adoção consistente de baselines estruturadas sob os padrões de comando e regras descritos no `agents.md` gera um impacto positivo mensurável na eficiência de desenvolvimento. Dados de estudos de integração de agentes demonstram que repositórios assistidos por IA que possuem baselines configuradas apresentam uma **redução mediana de 28,64% no tempo de entrega final da tarefa** (*wall-clock time*) e uma **redução de 16,58% no consumo total de tokens de saída** do modelo de linguagem, reduzindo os custos operacionais de API e minimizando ciclos de depuração redundantes causados por alucinações e desalinhamento de contexto.
 
 ---
@@ -352,7 +350,6 @@ meu-repositorio/
 │   ├── hooks.json                   # Registro central de ganchos do ciclo de vida da IDE
 │   └── mcp.json                     # Configuração local de servidores e portas MCP ativos
 ├── agents.md                        # Baseline de regras universais para multi-IDE
-└── agents.override.md               # Sobrescritas locais específicas do desenvolvedor (Ignorado Git)
 
 ```
 

@@ -12,7 +12,8 @@ Gere um plano de implementação estruturado para a tarefa solicitada.
    - Tarefas numeradas com dependências
    - Riscos e mitigações
    - Critérios de verificação por tarefa
-5. **Não implementar código** — handoff para `@rpe-developer.md`.
+5. **Persistir specs** (quando solicitado) em `.cursor/docs/specs/` usando `.cursor/templates/feature-spec.md` e `technical-spec.md`.
+6. **Não implementar código** — handoff para `@rpe-tester.md` / `@rpe-developer.md`.
 
 ## Output
 
