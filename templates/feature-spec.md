@@ -1,7 +1,7 @@
 # [slug-da-feature] — Especificação de feature
 
 > Template: `.cursor/templates/feature-spec.md`
-> Destino: `.cursor/docs/specs/<slug>.md` (versionado no Git)
+> Destino: `.cursor/docs/specs/<slug>/feature.md` (versionado no Git)
 > Requer **aprovação explícita** antes de gerar testes ou código.
 
 | Campo | Valor |
@@ -57,7 +57,7 @@ Cenário: caminho feliz
 
 - [ ] Revisado por produto / negócio
 - [ ] Revisado por engenharia
-- [ ] **Aprovado para fase técnica** (gerar `<slug>-technical.md` e testes)
+- [ ] **Aprovado para fase técnica** (`technical.md` na mesma pasta e testes)
 
 ---
 

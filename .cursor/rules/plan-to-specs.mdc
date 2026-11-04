@@ -1,0 +1,17 @@
+---
+description: "No Build, grava a spec se ela ainda não existir e não implementa no mesmo passo"
+alwaysApply: true
+---
+
+# Specs no Build
+
+O Cursor não dispara hook na passagem Plan → Build. Esta regra cobre esse clique.
+
+A spec aprovada é a fonte da verdade. O plano de tarefas do Plan Mode não é a spec.
+
+Quando o prompt pedir para executar um plano (Build, "implement the plan", plano anexado para implementar):
+
+1. Derive o slug em kebab-case do título.
+2. Não altere o arquivo do plano.
+3. Se `.cursor/docs/specs/<slug>/feature.md` e `technical.md` já existirem, implemente a partir deles.
+4. Se algum dos dois não existir, grave os dois nessa pasta e pare. Use `.cursor/templates/feature-spec.md` e `technical-spec.md`. Preencha com o desenho contido no plano (capacidades, componentes, interações, contratos). Status: `aprovado`. Não implemente neste passo. Informe os caminhos e o próximo passo: `@rpe-test-lead.md`, ou `@rpe-developer.md` se o pedido for sem TDD.

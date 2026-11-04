@@ -21,7 +21,9 @@ Conteúdo canônico para implementação e revisão Java. Referenciado por `java
 
 ### Estrutura
 
-`controllers` → `services` → `repositories` → `models` / `configurations`.
+Layout em camadas: `controllers` → `services` → `repositories` → `models` / `configurations`.
+
+Projeto com módulos `domain`, `application` e `infrastructure`: siga a skill `clean-architecture-ddd`. Esse layout em camadas não se aplica.
 
 ### Anotações e IoC
 

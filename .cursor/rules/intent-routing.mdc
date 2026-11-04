@@ -13,7 +13,7 @@ Define como o agente deve classificar e rotear tarefas antes da execução.
 Antes de iniciar qualquer tarefa, classifique internamente a intenção e siga o fluxo correspondente:
 
 - **`quick`**: Correções rápidas e refatorações pontuais. Forneça resposta direta e implemente.
-- **`deep`**: Implementação complexa ou novo módulo. Acione o fluxo de planejamento → implementação → revisão.
+- **`deep`**: Implementação complexa ou novo módulo. Planejamento e specs primeiro. TDD em seguida, salvo se o usuário pedir implementação direta: aí `@rpe-developer.md` e só depois `@rpe-tester.md`.
 - **`analysis`**: Investigação de código e debugging. Use ferramentas de leitura, visualização e busca extensivamente antes de intervir.
 - **`review`**: Revisão de PR ou código. Acione `@rpe-reviewer.md` ou `@review-pr.md`. Carregar `code-review.mdc` e `safety-guardrails.mdc`.
 - **`test`**: Criação/execução de testes. Acione fluxo TDD (`@rpe-test-lead.md` → `@rpe-tester.md`). Carregar `tdd-workflow.mdc`, `testing-standards.mdc` e skill `tdd-grinder`.

@@ -10,6 +10,8 @@ alwaysApply: false
 
 Ao editar arquivos `.java`, leia a skill **`java-mastery`** — conteúdo canônico em `.cursor/knowledge/stacks/java.md`.
 
+Se o projeto tiver módulos `domain`, `application` e `infrastructure`, ou a tarefa citar Clean Architecture, DDD, agregado, use case ou gateway, leia também **`clean-architecture-ddd`**. Nesse caso o layout `controllers → services → repositories` não se aplica.
+
 ## Verificação
 
 - `./gradlew spotlessApply` ou `./mvnw spotless:apply`

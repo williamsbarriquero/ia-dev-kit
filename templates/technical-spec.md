@@ -1,12 +1,12 @@
 # [slug-da-feature] — Especificação técnica
 
 > Template: `.cursor/templates/technical-spec.md`
-> Destino: `.cursor/docs/specs/<slug>-technical.md`
+> Destino: `.cursor/docs/specs/<slug>/technical.md`
 > Alimenta diretamente `@rpe-tester.md` e `@test-plan.md` (nível 4 — contratos).
 
 | Campo | Valor |
 |-------|-------|
-| **Feature spec** | `.cursor/docs/specs/<slug>.md` (deve estar **aprovada**) |
+| **Feature spec** | `.cursor/docs/specs/<slug>/feature.md` (deve estar **aprovada**) |
 | **Ticket** | FEATURE-XXX |
 | **Status** | rascunho \| aprovado |
 | **Última atualização** | YYYY-MM-DD |
@@ -59,4 +59,4 @@
 
 | Data | Autor | Alteração |
 |------|-------|-----------|
-| | | Derivado de `<slug>.md` |
+| | | Derivado de `feature.md` |

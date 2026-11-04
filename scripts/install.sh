@@ -21,7 +21,7 @@ usage() {
   echo "Uso: $0 [opções] <target-dir> [modules]"
   echo ""
   echo "Stacks (combináveis):"
-  echo "  --java        Padrões Java (java-standards, java-mastery, knowledge/java)"
+  echo "  --java        Padrões Java (java-standards, java-mastery, clean-architecture-ddd, knowledge/java)"
   echo "  --go          Padrões Go"
   echo "  --node        Padrões Node.js backend"
   echo "  --react       Frontend/Next.js (frontend-standards + frontend-mastery + knowledge/frontend)"

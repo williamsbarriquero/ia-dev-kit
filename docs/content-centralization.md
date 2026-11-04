@@ -47,6 +47,8 @@ O mesmo padrão aparecia em Go/Node e, no frontend, em **4 rules** sobrepostas.
 | Stack | SSOT | Skill | Rule |
 |-------|------|-------|------|
 | Java | `knowledge/stacks/java.md` | `java-mastery` | `java-standards.mdc` |
+
+Skills de arquitetura (`hexagonal-architecture`, `clean-architecture-ddd`) guardam o próprio conteúdo. Não fundir em `knowledge/stacks/java.md`: aquele arquivo descreve o layout em camadas Spring, e o DDD só entra quando o projeto usa os três módulos.
 | Go | `knowledge/stacks/go.md` | `go-mastery` | `go-standards.mdc` |
 | Node | `knowledge/stacks/node.md` | `node-mastery` | `node-standards.mdc` |
 | Frontend | `knowledge/stacks/frontend.md` | `frontend-mastery` | `frontend-standards.mdc` + `typescript.mdc` (ponte) |

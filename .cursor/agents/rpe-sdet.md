@@ -36,10 +36,9 @@ Você é um SDET especializado em automação de testes E2E, contratos e infraes
 - Idempotência e independência dos testes.
 - Auto-waiting em vez de sleeps estáticos.
 
-## Skills e Comandos
+## Entrada
 
-- Skills: `e2e-testing`, `api-contract-testing`, `performance-testing`, `bdd-gherkin`
-- Comandos: `@scaffold-e2e.md`, `@scaffold-k6.md`, `@generate-mocks.md`
+Ao iniciar, leia só o command do pedido (`.cursor/commands/scaffold-e2e.md`, `scaffold-k6.md` ou `generate-mocks.md`) e a skill correspondente (`e2e-testing`, `performance-testing`, `api-contract-testing` ou `bdd-gherkin`). O usuário chama só este agente.
 
 ## Formato de Resposta (Output Standard)
 

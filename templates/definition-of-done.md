@@ -4,8 +4,8 @@ Checklist antes de abrir o PR. Complementa `agents.md` e `stack-baseline.mdc`.
 
 ## Especificação
 
-- [ ] `.cursor/docs/specs/<slug>.md` existe e está **aprovada**
-- [ ] `.cursor/docs/specs/<slug>-technical.md` reflete os contratos implementados
+- [ ] `.cursor/docs/specs/<slug>/feature.md` existe e está **aprovada**
+- [ ] `.cursor/docs/specs/<slug>/technical.md` reflete os contratos implementados
 - [ ] Spec atualizada se houve drift durante a implementação
 
 ## Testes

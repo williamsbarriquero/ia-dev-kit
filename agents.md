@@ -1,6 +1,6 @@
 # Operational Policies for Coding Agents
 
-Baseline universal do **RPE Harness**, compatível com múltiplos agentes de IA (Cursor, Claude Code, GitHub Copilot, Cline, Aider). Copiado pelo `install.sh` para projetos alvo — personalize **Stack do Projeto**, **Arquitetura** e **Restrições** após a instalação (ver [confluence-how-to-guide.md](docs/confluence-how-to-guide.md) §1.4).
+Baseline universal do **RPE Harness**, compatível com múltiplos agentes de IA (Cursor, Claude Code, GitHub Copilot, Cline, Aider). Copiado pelo `install.sh` para projetos alvo. O primeiro agente preenche **Stack do Projeto**, **Arquitetura**, **Restrições** e **Verificação** quando ainda houver `_[PREENCHER]_`. O usuário não anexa este arquivo.
 
 | Documento | Conteúdo |
 |-----------|----------|
