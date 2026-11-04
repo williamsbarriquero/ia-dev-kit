@@ -28,7 +28,7 @@ ia-dev-kit/
 │   ├── rules/          # 17 regras .mdc
 │   ├── agents/         # 12 agentes rpe-*
 │   ├── commands/       # 15 comandos @
-│   ├── skills/         # 16 skills (índices → knowledge)
+│   ├── skills/         # 18 skills (índices → knowledge; arquitetura no próprio skill)
 │   ├── knowledge/      # SSOT por stack (java, go, node)
 │   ├── hooks/          # guards, transforms, continuations
 │   ├── hooks.json

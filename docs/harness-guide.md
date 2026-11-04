@@ -44,7 +44,7 @@ Invoque com `@` no chat ou Composer:
 
 | Agente | Escopo |
 |--------|--------|
-| `@rpe-architect.md` | Planejamento arquitetural (read-only) |
+| `@rpe-architect.md` | Planejamento. Na aprovação, grava as specs |
 | `@rpe-developer.md` | Implementação de código |
 | `@rpe-reviewer.md` | Revisão geral de qualidade |
 | `@rpe-security.md` | Deep dive AppSec, SLSA, IaC |
@@ -63,13 +63,15 @@ Automação total com auto-correção via `grind-loop.ts`.
 
 - **Acionar**: prefixo `ultrawork:`, palavra `ultrawork`, ou `@ultrawork.md`
 - **Scratchpad**: `.cursor/scratchpad.md` (template: `.cursor/scratchpad.template.md`) — estado de sessão
-- **Specs**: `.cursor/docs/specs/` — SSOT versionado por feature (`<slug>.md` + `<slug>-technical.md`)
+- **Specs**: `.cursor/docs/specs/<slug>/` — `feature.md` e `technical.md`
 - **Limite**: 5 iterações automáticas
 - **Requer**: Bun no PATH (instalado automaticamente pelo `install.sh` com módulo `hooks`)
 
 ---
 
 ## 2. Comandos Rápidos
+
+Catálogo interno. No uso diário chame o **agente** da fase: ele lê o command e as skills. Os únicos commands que entram no prompt, sem agente, são `@validate-stack.md` e `@ultrawork.md`. Passo a passo: [confluence-how-to-guide.md](./confluence-how-to-guide.md).
 
 | Comando | Descrição |
 |---------|-----------|
@@ -93,11 +95,11 @@ Automação total com auto-correção via `grind-loop.ts`.
 
 ## 3. Biblioteca de Skills
 
-Skills são **índices de ativação** — o conteúdo técnico vive em `.cursor/knowledge/stacks/`. Ver [content-centralization.md](./content-centralization.md).
+Skills de stack são **índices de ativação** — o conteúdo técnico vive em `.cursor/knowledge/stacks/`. Skills de arquitetura carregam o próprio conteúdo. Ver [content-centralization.md](./content-centralization.md).
 
 ### Arquitetura e Padrões
 
-- `hexagonal-architecture`, `design-patterns`, `solid-principles`
+- `hexagonal-architecture`, `clean-architecture-ddd` (Java, stack `--java`), `design-patterns`, `solid-principles`
 
 ### Linguagens (SSOT em knowledge/stacks/)
 

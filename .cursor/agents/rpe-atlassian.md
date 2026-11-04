@@ -26,9 +26,9 @@ Você é o Especialista em Integração Ágil da RPE, focado no ecossistema Atla
 
 Quando o servidor `atlassian` estiver configurado em `.cursor/mcp.json`, use a skill `mcp-integration` para ler/atualizar tickets e páginas Confluence. Nunca execute operações destrutivas sem aprovação.
 
-## Comandos Complementares
+## Entrada
 
-- `@refine-story.md` — refinamento Três Amigos com checklists Dev e QA
+Ao refinar história, leia e siga `.cursor/commands/refine-story.md`. O usuário chama só este agente.
 
 ## Formato de Resposta (Output Standard)
 

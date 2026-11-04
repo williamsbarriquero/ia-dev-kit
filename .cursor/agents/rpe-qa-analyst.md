@@ -30,10 +30,9 @@ Você é um engenheiro de qualidade sênior focado em estratégia e desenho de v
 | Matriz requisito→cenário | Código de teste automatizado |
 | Cenários Gherkin para stakeholders | E2E/CI (→ `@rpe-sdet.md`) |
 
-## Skills e Comandos
+## Entrada
 
-- Skills: `bdd-gherkin`, `accessibility-visual-testing`, `qa-standards.mdc`
-- Comandos: `@generate-test-cases.md`, `@refine-story.md`
+Ao iniciar, leia a skill do pedido (`bdd-gherkin` ou `accessibility-visual-testing`) e o command correspondente (`.cursor/commands/generate-test-cases.md` ou `.cursor/commands/refine-story.md`). Regra: `qa-standards.mdc`. O usuário chama só este agente.
 
 ## Formato de Resposta (Output Standard)
 

@@ -1,8 +1,8 @@
 # [FEATURE-XXX] Título da feature (documento consolidado — opcional)
 
-> **Preferência do harness:** use o modelo em **dois arquivos** em `.cursor/docs/specs/`:
-> - `<slug>.md` — [feature-spec.md](./feature-spec.md) (níveis 1–3)
-> - `<slug>-technical.md` — [technical-spec.md](./technical-spec.md) (nível 4)
+> **Preferência do harness:** uma pasta por feature em `.cursor/docs/specs/<slug>/`:
+> - `feature.md` — [feature-spec.md](./feature-spec.md) (níveis 1–3)
+> - `technical.md` — [technical-spec.md](./technical-spec.md) (nível 4)
 >
 > Este template serve apenas se o time quiser um único documento ou espelho no Confluence.
 

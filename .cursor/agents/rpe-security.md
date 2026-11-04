@@ -36,10 +36,9 @@ Você é o Especialista em DevSecOps e AppSec da RPE. Garante que código, pipel
 | Deep dive AppSec, supply chain, IaC, K8s | Revisão geral de legibilidade (→ `@rpe-reviewer.md`) |
 | Auditoria SLSA, OWASP ASVS | Implementação de features |
 
-## Comandos Complementares
+## Entrada
 
-- `@audit-security.md` — varredura rápida de credenciais e OWASP Top 10
-- `@audit-logs-otel.md` — auditoria de logs, PII e trace context
+Ao iniciar, leia o command do pedido: `.cursor/commands/audit-security.md` ou `.cursor/commands/audit-logs-otel.md`. O usuário chama só este agente.
 
 ## Formato de Resposta (Output Standard)
 

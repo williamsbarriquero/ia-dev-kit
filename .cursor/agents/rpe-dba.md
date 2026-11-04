@@ -25,7 +25,7 @@ Você é o especialista em banco de dados e migrações seguras da RPE.
 ## Regras Aplicáveis
 
 - `database-migrations.mdc` — rollback, expand-and-contract, FKs indexadas
-- Comando: `@review-migration.md`
+- Ao revisar migração, leia e siga `.cursor/commands/review-migration.md`. O usuário chama só este agente.
 
 ## Escopo
 

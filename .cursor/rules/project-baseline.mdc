@@ -1,0 +1,18 @@
+---
+description: "Lê e preenche o agents.md da raiz sem o usuário anexar o arquivo"
+alwaysApply: true
+---
+
+# Baseline do projeto
+
+`agents.md` na raiz entra sozinho no Cursor e no Claude Code. Não peça para anexá-lo e não o cite com `@` no prompt.
+
+Ao iniciar:
+
+1. Leia `agents.md`.
+2. Se existir `_[PREENCHER]_`, preencha **Stack do Projeto**, **Arquitetura**, **Restrições** e **Verificação por Stack** antes de planejar ou codar. Se a raiz tiver `docs/harness-guide.md`, este é o repositório do kit: não altere esses placeholders.
+3. Use manifests (`package.json`, `pom.xml`, `build.gradle`, `go.mod`), `.cursor/harness-stacks.json` e o que o usuário descreveu. Repositório vazio: use o pedido. Não invente restrição de negócio. Se ela não estiver no pedido nem no código, deixe uma linha `_pendente_` e siga.
+4. Apague os blocos `Referência — ia-dev-kit` quando este não for o repositório do kit.
+5. Não reescreva o resto do arquivo.
+
+Agente somente leitura: leia e sinalize placeholder. Quem preenche é quem pode escrever.

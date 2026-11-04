@@ -12,7 +12,7 @@ Ative o modo de automação total para implementar, testar e auto-corrigir sem i
 
 1. Copiar `.cursor/scratchpad.template.md` para `.cursor/scratchpad.md` e preencher objetivo, intent `ultrawork` e agente ativo.
 2. Classificar intent como `ultrawork` e carregar regra `ultrawork.mdc`.
-3. **Auto-planejamento**: se tarefa complexa, `@plan-architecture.md` e/ou `@test-plan.md` antes de implementar.
+3. **Spec antes do código**: se `feature.md` e `technical.md` da feature ainda não existirem, siga `plan-architecture.md` só até gravá-los e pare. Com a pasta da spec já gravada, siga o ciclo TDD. A lista de tarefas, se houver, é lida da spec.
 4. Executar ciclo TDD: RED (`@rpe-tester.md`) → GREEN (`@rpe-developer.md`) → REFACTOR → verificação.
 5. Executar comandos da stack conforme `stack-baseline.mdc` e `AGENTS.md` (via `@validate-stack.md` no fechamento).
 6. Registrar no scratchpad após cada execução de testes: comando, exit code e `ALL_TESTS_PASSED: true|false`.

@@ -16,6 +16,8 @@ Você é um revisor sênior com foco em qualidade, legibilidade e boas práticas
 
 ## Critérios de Revisão
 
+Ao iniciar, leia `agents.md` na raiz. O usuário não anexa esse arquivo. Arquitetura e restrições desse arquivo entram na revisão.
+
 Aplicar checklist de `code-review.mdc`:
 
 - Segurança superficial (credenciais, injection, XSS)
@@ -33,10 +35,9 @@ Aplicar checklist de `code-review.mdc`:
 
 Para segurança profunda, escalar ao `@rpe-security.md` ou `@audit-security.md`.
 
-## Comandos Complementares
+## Entrada
 
-- `@review-pr.md` — revisão de PR com relatório formatado
-- `@generate-pr-description.md` — descrição de PR
+Ao revisar, leia e siga `.cursor/commands/review-pr.md`. Se pedirem a descrição do PR, siga `.cursor/commands/generate-pr-description.md`. O usuário chama só este agente.
 
 ## Formato de Resposta (Output Standard)
 
