@@ -1,0 +1,62 @@
+# [slug-da-feature] — Especificação técnica
+
+> Template: `.claude/templates/technical-spec.md`
+> Destino: `docs/specs/<slug>/technical.md`
+> Alimenta diretamente subagent `rpe-tester` e `/test-plan` (nível 4 — contratos).
+
+| Campo | Valor |
+|-------|-------|
+| **Feature spec** | `docs/specs/<slug>/feature.md` (deve estar **aprovada**) |
+| **Ticket** | FEATURE-XXX |
+| **Status** | rascunho \| aprovado |
+| **Última atualização** | YYYY-MM-DD |
+
+---
+
+## 1. Decisões arquiteturais
+
+| Decisão | Alternativas | Motivo |
+|---------|--------------|--------|
+| | | |
+
+## 2. Contratos — interfaces e ports (nível 4)
+
+```text
+// Esboço de interfaces, ports de entrada/saída
+```
+
+## 3. DTOs e modelos de domínio
+
+| Nome | Campos | Validações |
+|------|--------|------------|
+| | | |
+
+## 4. APIs / eventos / persistência
+
+| Operação | Entrada | Saída | Erros HTTP / códigos |
+|----------|---------|-------|----------------------|
+| | | | |
+
+### Schema / migração (se aplicável)
+
+```sql
+-- esboço
+```
+
+## 5. Mapeamento para testes
+
+| Contrato | Tipo de teste | Prioridade | Arquivo previsto |
+|----------|---------------|------------|------------------|
+| | unitário / integração / E2E | P0 | |
+
+## 6. Edge cases técnicos
+
+-
+
+---
+
+## Histórico
+
+| Data | Autor | Alteração |
+|------|-------|-----------|
+| | | Derivado de `feature.md` |

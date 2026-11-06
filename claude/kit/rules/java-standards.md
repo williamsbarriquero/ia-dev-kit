@@ -1,0 +1,22 @@
+---
+paths:
+  - "**/*.java"
+---
+
+# Padrões Java RPE
+
+## Ativação
+
+Ao editar arquivos `.java`, leia a skill **`java-mastery`** (`.claude/skills/java-mastery/SKILL.md`) e `.claude/knowledge/stacks/java.md`.
+
+Siga a arquitetura e os testes que o repositório já usa.
+
+Leia **`clean-architecture`** e **`java-test-layers`** somente se o projeto já tem os módulos `domain`, `application` e `infrastructure` (ou use case abstrato e gateway no domínio), ou se o usuário pediu para adotar Clean Architecture. Não reestruture um serviço de outra arquitetura para esse modelo.
+
+Se o projeto tiver módulos `domain`, `application` e `infrastructure`, ou a tarefa citar Clean Architecture, DDD, agregado, use case ou gateway, leia também **`clean-architecture-ddd`**. Nesse caso o layout `controllers → services → repositories` não se aplica.
+
+## Verificação
+
+- `./gradlew spotlessApply` ou `./mvnw spotless:apply`, se o plugin existir
+- Task de teste que o build já define. `unitTests`, `integrationTests` e `e2eTests` só quando existirem
+- Suíte padrão: `./gradlew test` ou `./mvnw test`

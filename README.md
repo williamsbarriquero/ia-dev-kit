@@ -18,6 +18,8 @@ cd /caminho/para/seu/projeto && ./scripts/validate.sh
 
 **Pré-requisitos:** Cursor 3+, Git, test runner da stack, Node/npx (MCP opcional). **Bun** (UltraWork) é instalado automaticamente pelo `install.sh` quando o módulo `hooks` está incluído; use `--skip-bun` para pular.
 
+**Usa Claude Code?** A versão para Claude Code está em [claude/](claude/README.md): `bash ai-dev-kit/claude/scripts/install.sh --java /caminho/para/seu/projeto`.
+
 ---
 
 ## Estrutura do Harness (SSOT)

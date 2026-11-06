@@ -1,0 +1,18 @@
+---
+name: git-conventions
+description: "Convenções Git RPE: Conventional Commits, nomes de branch, commits atômicos e template de PR. Use ao criar commits, branches ou PRs."
+---
+
+# Convenções Git RPE
+
+## Contexto
+
+Aplicável ao criar commits, analisar PRs e gerenciar branches.
+
+## Instruções
+
+- **Conventional Commits**: O uso é obrigatório no formato `type(scope): description`.
+  - Types permitidos: `feat`, `fix`, `refactor`, `docs`, `test`, `chore`, `ci`, `perf`.
+- **Nomenclatura de Branch**: Seguir o padrão: `feature/TICKET-123-descricao`, `fix/TICKET-456-bug`, ou `chore/descricao`.
+- **Commits atômicos**: Um conceito lógico por commit para facilitar revert e revisão.
+- **Pull Requests**: Os templates devem incluir Título, Descrição, Checklist de revisão e Screenshots (se aplicável a UI).

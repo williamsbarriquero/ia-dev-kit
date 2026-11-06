@@ -1,0 +1,46 @@
+# Stack Baseline RPE
+
+## Contexto
+
+SSOT para comandos de verificação aplicáveis conforme a stack do projeto. Referenciado por `AGENTS.md`, skill `tdd-workflow` e agentes de implementação.
+
+## Instruções
+
+Identifique a stack principal e execute os comandos correspondentes antes de declarar conclusão:
+
+### Node.js / TypeScript
+
+- Lint: `npx eslint . --fix`
+- Format: `npx prettier --write .`
+- Type-check: `npx tsc --noEmit`
+- Testes: `npm test`
+
+### Go
+
+- Lint: `golangci-lint run --fix`
+- Format: `gofmt -w .`
+- Testes: `go test ./...`
+
+### Java
+
+- Quality: `./gradlew spotlessApply` ou `./mvnw spotless:apply`, se o plugin existir
+- Testes: a task que o build já expõe. `./gradlew unitTests`, `integrationTests` e `e2eTests` só se essas tasks existirem
+- Suíte padrão: `./gradlew test` ou `./mvnw test`
+
+Arquitetura: a do repositório. Skills `clean-architecture` e `java-test-layers` só se o projeto já usa esse modelo ou o usuário pedir para adotá-lo.
+
+### RPE Harness
+
+- Validação do harness instalado: `bash .claude/rpe/validate.sh`
+- Lint shell (se houver scripts no projeto): `shellcheck scripts/*.sh`
+
+## Definition of Done
+
+1. Código compila sem erros de tipagem/compilação.
+2. Suíte de testes retorna exit code `0`.
+3. Linter e formatadores retornam exit code `0`.
+4. Modificações prontas para commit quando solicitado pelo usuário (Conventional Commits).
+
+## Verificação
+
+Comando consolidado: `/validate-stack`

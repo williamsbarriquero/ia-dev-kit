@@ -1,0 +1,86 @@
+{
+  "permissions": {
+    "deny": [
+      "Edit(**/.env)",
+      "Edit(**/.env.local)",
+      "Edit(**/.env.production)",
+      "Edit(**/.env.*.local)",
+      "Edit(**/package-lock.json)",
+      "Edit(**/yarn.lock)",
+      "Edit(**/pnpm-lock.yaml)"
+    ],
+    "ask": [
+      "Edit(**/Dockerfile)",
+      "Edit(**/docker-compose.yml)",
+      "Edit(**/docker-compose.*.yml)",
+      "Edit(**/.github/workflows/**)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun run \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/rpe-guard-bash.ts",
+            "timeout": 60
+          }
+        ]
+      },
+      {
+        "matcher": "mcp__.*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun run \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/rpe-guard-mcp.ts",
+            "timeout": 30
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun run \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/rpe-guard-write.ts",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun run \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/rpe-lint.ts",
+            "timeout": 120
+          }
+        ]
+      },
+      {
+        "matcher": "ExitPlanMode",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun run \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/rpe-plan-to-specs.ts",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun run \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/rpe-grind-loop.ts",
+            "timeout": 300
+          }
+        ]
+      }
+    ]
+  }
+}
