@@ -99,12 +99,13 @@ Skills de stack são **índices de ativação** — o conteúdo técnico vive em
 
 ### Arquitetura e Padrões
 
-- `hexagonal-architecture`, `clean-architecture-ddd` (Java, stack `--java`), `design-patterns`, `solid-principles`
+- `hexagonal-architecture`, `clean-architecture` e `java-test-layers` (Java, opt-in: o repositório já usa o modelo ou o usuário pediu), `clean-architecture-ddd` (Java, mesma condição), `design-patterns`, `solid-principles`
 
 ### Linguagens (SSOT em knowledge/stacks/)
 
 - `go-mastery` → `knowledge/stacks/go.md`
 - `java-mastery` → `knowledge/stacks/java.md`
+- `java-test-layers` — tags `unitTest`, `integrationTest`, `e2eTest`, na mesma condição opt-in
 - `node-mastery` → `knowledge/stacks/node.md`
 
 ### Qualidade e Testes
@@ -168,7 +169,7 @@ O `mcp.json` local é ignorado pelo git. Na primeira conexão Atlassian, complet
 A instalação copia:
 
 - **Harness core** (sempre): agentes, commands, hooks, regras globais, skills universais
-- **Por stack** (conforme flags): rules contextuais, skills `*-mastery`, knowledge em `stacks/`
+- **Por stack** (conforme flags): rules contextuais, skills da stack (`*-mastery`; em Java também `clean-architecture`, `java-test-layers` e `clean-architecture-ddd`), knowledge em `stacks/`
 - `agents.md`, scratchpad template e `scratchpad.md`
 - `.cursor/docs/specs/` e templates (`feature-spec.md`, `technical-spec.md`, `definition-of-done.md`)
 - `scripts/` (`install.sh`, `validate.sh`, `update.sh`, `lib/stack-manifest.sh`)

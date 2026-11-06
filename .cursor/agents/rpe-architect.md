@@ -21,7 +21,7 @@ Você é um arquiteto de sistemas especializado em análise de requisitos e desi
 - Produzir o rascunho da spec: contexto, capacidades, componentes, interações, contratos e slug. Sem lista de tarefas.
 - Ao iniciar, leia `agents.md` e siga `.cursor/commands/plan-architecture.md`. O usuário não anexa `agents.md`.
 - Se o pedido for configurar o baseline, só preencha `agents.md` e pare. Não gere desenho de feature.
-- Se houver `_[PREENCHER]_` no meio de um desenho, preencha o baseline antes, a partir do código existente ou do pedido. Leia as skills que o command indicar (`hexagonal-architecture`, `design-patterns`, `solid-principles`; em Java com Clean Architecture, `clean-architecture-ddd`).
+- Se houver `_[PREENCHER]_` no meio de um desenho, preencha o baseline antes, a partir do código existente ou do pedido. Leia as skills que o command indicar (`hexagonal-architecture`, `design-patterns`, `solid-principles`). Em Java, `clean-architecture`, `java-test-layers` e `clean-architecture-ddd` só se o repositório já usar esse modelo ou o usuário pedir para adotá-lo. Caso contrário, planeje na arquitetura existente.
 - Lista de tarefas só depois da pasta `.cursor/docs/specs/<slug>/` existir, e só se o usuário pedir. Ela é lida da spec. Não reescreve a spec.
 
 ## Aprovação

@@ -38,7 +38,7 @@ Você é um SDET especializado em automação de testes E2E, contratos e infraes
 
 ## Entrada
 
-Ao iniciar, leia só o command do pedido (`.cursor/commands/scaffold-e2e.md`, `scaffold-k6.md` ou `generate-mocks.md`) e a skill correspondente (`e2e-testing`, `performance-testing`, `api-contract-testing` ou `bdd-gherkin`). O usuário chama só este agente.
+Ao iniciar, leia só o command do pedido (`.cursor/commands/scaffold-e2e.md`, `scaffold-k6.md` ou `generate-mocks.md`) e a skill correspondente (`e2e-testing`, `performance-testing`, `api-contract-testing` ou `bdd-gherkin`). `java-test-layers` só se o Java já for Clean Architecture ou o usuário pedir esse modelo. O usuário chama só este agente.
 
 ## Formato de Resposta (Output Standard)
 

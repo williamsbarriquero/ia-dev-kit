@@ -36,7 +36,8 @@ O mesmo padrão aparecia em Go/Node e, no frontend, em **4 rules** sobrepostas.
 
 ## Checklist ao adicionar conteúdo
 
-- [ ] O padrão é específico de uma stack? → vai em `knowledge/stacks/<stack>.md`
+- [ ] É linguagem, runtime ou ecossistema de uma stack? → `knowledge/stacks/<stack>.md`
+- [ ] É o modelo opt-in de Clean Architecture, o DDD tático ou a suíte desse modelo? → skills `clean-architecture`, `clean-architecture-ddd` e `java-test-layers` (não viram padrão de todo Java)
 - [ ] Precisa ativar ao abrir arquivos? → rule contextual fina com `globs`
 - [ ] Precisa ativar sob demanda / por agente? → skill fina com ponte ao knowledge
 - [ ] É um fluxo repetível (validar, revisar PR)? → command que referencia, não duplica
@@ -46,9 +47,12 @@ O mesmo padrão aparecia em Go/Node e, no frontend, em **4 rules** sobrepostas.
 
 | Stack | SSOT | Skill | Rule |
 |-------|------|-------|------|
-| Java | `knowledge/stacks/java.md` | `java-mastery` | `java-standards.mdc` |
+| Java (linguagem) | `knowledge/stacks/java.md` | `java-mastery` | `java-standards.mdc` |
+| Java Clean Architecture (opt-in) | skill `clean-architecture` | `clean-architecture` | `java-standards.mdc` (só se o repo já usa ou o usuário pede) |
+| Java DDD tático (opt-in) | skill `clean-architecture-ddd` | `clean-architecture-ddd` | `java-standards.mdc` (mesma condição) |
+| Java testes desse modelo (opt-in) | skill `java-test-layers` | `java-test-layers` | `java-standards.mdc` (mesma condição) |
 
-Skills de arquitetura (`hexagonal-architecture`, `clean-architecture-ddd`) guardam o próprio conteúdo. Não fundir em `knowledge/stacks/java.md`: aquele arquivo descreve o layout em camadas Spring, e o DDD só entra quando o projeto usa os três módulos.
+Skills de arquitetura (`hexagonal-architecture`, `clean-architecture`, `clean-architecture-ddd`, `java-test-layers`) guardam o próprio conteúdo. Não fundir em `knowledge/stacks/java.md`. O layout em camadas Spring fica nesse arquivo; Clean Architecture e DDD só entram quando o projeto usa os três módulos ou o usuário pede o modelo.
 | Go | `knowledge/stacks/go.md` | `go-mastery` | `go-standards.mdc` |
 | Node | `knowledge/stacks/node.md` | `node-mastery` | `node-standards.mdc` |
 | Frontend | `knowledge/stacks/frontend.md` | `frontend-mastery` | `frontend-standards.mdc` + `typescript.mdc` (ponte) |
@@ -63,5 +67,8 @@ Skills de arquitetura (`hexagonal-architecture`, `clean-architecture-ddd`) guard
 
 Ao alterar um padrão Java:
 
-1. Edite **somente** `.cursor/knowledge/stacks/java.md`
-2. Não altere skill/rule a menos que mude globs, triggers ou comandos de verificação
+1. Linguagem, Spring ou JVM: edite `.cursor/knowledge/stacks/java.md`
+2. Modelo opt-in de módulos, use case e gateway: edite a skill `clean-architecture`
+3. DDD tático (agregados, gateways, Notification/Either): edite a skill `clean-architecture-ddd`
+4. Tags e bases desse modelo: edite a skill `java-test-layers`
+5. Não copie esse mapa para rules globais nem o imponha em `java.md` como arquitetura única

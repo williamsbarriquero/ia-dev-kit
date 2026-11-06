@@ -35,7 +35,7 @@ Planejamento orientado a especificação. A spec aprovada em `.cursor/docs/specs
 
 Fora desse fluxo, a mesma regra: `@rpe-security.md`, `@rpe-dba.md`, `@rpe-qa-analyst.md`, `@rpe-sdet.md`, `@rpe-atlassian.md`, `@rpe-tech-writer.md`. Cada um abre o command do pedido.
 
-O `@rpe-architect.md` já segue `plan-architecture`, lê `agents.md` e as skills de arquitetura (`hexagonal-architecture`, `clean-architecture-ddd` em Java, `design-patterns`, `solid-principles`).
+O `@rpe-architect.md` já segue `plan-architecture`, lê `agents.md` e as skills de arquitetura (`hexagonal-architecture`, `design-patterns`, `solid-principles`). Em Java, `clean-architecture`, `java-test-layers` e `clean-architecture-ddd` só se o repositório já usar esse modelo ou o pedido for adotá-lo.
 
 ---
 
@@ -74,7 +74,7 @@ Sem flag de stack, instala java, go, node e react.
 
 | Flag | O que entra além do harness core |
 |------|----------------------------------|
-| `--java` | `java-standards`, `java-mastery`, `clean-architecture-ddd`, `knowledge/stacks/java.md` |
+| `--java` | `java-standards`, `java-mastery`, `clean-architecture`, `java-test-layers`, `clean-architecture-ddd`, `knowledge/stacks/java.md` |
 | `--go` | `go-standards`, `go-mastery`, `knowledge/stacks/go.md` |
 | `--node` | `node-standards`, `typescript`, `node-mastery`, `knowledge/stacks/node.md` |
 | `--react` | `frontend-standards`, `frontend-mastery`, `typescript`, `knowledge/stacks/frontend.md` |
@@ -250,11 +250,14 @@ Implementar até o GREEN:
 
 Implemente o mínimo para os testes passarem.
 Siga a arquitetura descrita no agents.md.
+Se o Java do projeto já for Clean Architecture, ou o pedido for adotá-la: domínio e gateway → use case → adapter. Nos demais, implemente na arquitetura existente.
 Execute os testes depois de cada arquivo.
 Não refatore ainda.
 ```
 
 Revise o diff. Não escreva o código no lugar do agente.
+
+> O developer lê a skill da stack (`java-mastery`, `go-mastery`, `node-mastery`) e o SSOT em `.cursor/knowledge/stacks/<stack>.md`. `clean-architecture`, `java-test-layers` e `clean-architecture-ddd` só entram se o repositório Java já seguir esse modelo ou o usuário pedir para adotá-lo.
 
 ### 3.3 Sem TDD
 

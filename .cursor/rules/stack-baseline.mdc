@@ -28,8 +28,11 @@ Identifique a stack principal e execute os comandos correspondentes antes de dec
 
 ### Java
 
-- Quality: `./gradlew spotlessApply` ou `./mvnw spotless:apply`
-- Testes: `./gradlew test` ou `./mvnw test`
+- Quality: `./gradlew spotlessApply` ou `./mvnw spotless:apply`, se o plugin existir
+- Testes: a task que o build já expõe. `./gradlew unitTests`, `integrationTests` e `e2eTests` só se essas tasks existirem
+- Suíte padrão: `./gradlew test` ou `./mvnw test`
+
+Arquitetura: a do repositório. Skills `clean-architecture` e `java-test-layers` só se o projeto já usa esse modelo ou o usuário pedir para adotá-lo.
 
 ### RPE Harness / Shell
 

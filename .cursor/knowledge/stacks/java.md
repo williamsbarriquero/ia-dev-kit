@@ -1,74 +1,51 @@
 # Java & Spring Boot — SSOT RPE
 
-Conteúdo canônico para implementação e revisão Java. Referenciado por `java-mastery` e `java-standards.mdc`.
+Conteúdo canônico de linguagem, runtime e stack. Referenciado por `java-mastery` e `java-standards.mdc`.
+
+A arquitetura do serviço é a que o repositório já usa. Camadas `controller → service → repository`, hexágono, módulos Maven próprios e outros layouts são válidos. Não reestruture o projeto para outro modelo durante uma tarefa de funcionalidade.
+
+## Clean Architecture (opt-in)
+
+Skills `clean-architecture` e `java-test-layers` valem só quando:
+
+1. O repositório já tem os módulos `domain`, `application` e `infrastructure`, ou use case abstrato com gateway no domínio.
+2. O usuário pediu explicitamente para adotar esse modelo.
+
+Fora desses casos, não crie esses módulos e não troque a estrutura existente.
 
 ## Recursos modernos do Java
 
-- **Records**: data carriers imutáveis (getters, `equals`, `hashCode`, `toString` gerados).
+- **Records**: data carriers imutáveis.
 - **Sealed classes**: restringir hierarquias para pattern matching seguro.
 - **Pattern matching**: `instanceof` e `switch` expressivos.
 - **Text blocks**: `"""` para JSON, SQL, HTML multilinha.
-- **Var**: inferência local quando o tipo é óbvio pelo RHS.
+- **Var**: inferência local quando o tipo é óbvio pelo RHS (`final var`).
 
 ## Estilo e nomenclatura
 
-- Classes: `PascalCase` (ex.: `UserController`, `OrderService`).
-- Métodos/variáveis: `camelCase`.
-- Constantes: `ALL_CAPS`.
-- Código limpo, documentado; controllers enxutos delegando lógica a services.
+- Classes: `PascalCase`. Métodos e variáveis: `camelCase`. Constantes: `ALL_CAPS`.
+- Siga os nomes que o pacote vizinho já usa (service, use case, repository, gateway).
+- Injeção por construtor. Sem `@Autowired` em campo.
 
 ## Spring Boot
 
 ### Estrutura
 
-Layout em camadas: `controllers` → `services` → `repositories` → `models` / `configurations`.
+Layout em camadas (`controllers` → `services` → `repositories` → `models` / `configurations`) quando o projeto já o usa.
 
-Projeto com módulos `domain`, `application` e `infrastructure`: siga a skill `clean-architecture-ddd`. Esse layout em camadas não se aplica.
+Projeto com módulos `domain`, `application` e `infrastructure`, ou pedido explícito de Clean Architecture: siga `clean-architecture`, `clean-architecture-ddd` e `java-test-layers`. Esse layout em camadas não se aplica.
 
 ### Anotações e IoC
 
-- `@SpringBootApplication`, `@RestController`, `@Service`, auto-configuration.
-- **Injeção por construtor** — evitar `@Autowired` em campos.
+- `@SpringBootApplication`, `@RestController`, `@Service` quando o projeto já organiza a regra em services.
 - `@ControllerAdvice` + `@ExceptionHandler` para erros.
-
-### Configuração
-
-- `application.properties` ou `application.yml`.
-- Profiles por ambiente (`dev`, `test`, `prod`).
-- `@ConfigurationProperties` para config tipada.
-
-### API REST
-
-- HTTP methods e status codes corretos.
-- Bean Validation (`@Valid`, validadores customizados).
-- Springdoc OpenAPI para documentação.
-
-### Dados
-
-- Spring Data JPA; relacionamentos e cascade adequados.
-- Migrações: Flyway ou Liquibase.
-
-### Performance e async
-
-- Spring Cache quando aplicável.
-- `@Async` para operações não bloqueantes.
-- Indexação e otimização de queries.
-
-### Segurança
-
-- Spring Security; BCrypt para senhas.
-- CORS configurado por ambiente.
-
-### Observabilidade
-
-- SLF4J + Logback (ERROR, WARN, INFO, DEBUG).
-- Spring Boot Actuator para métricas.
-
-### Build e deploy
-
-- Maven ou Gradle; profiles por ambiente.
-- Docker quando aplicável.
-- Java 17+; Spring Boot 3.x.
+- `application.yml` com profiles por ambiente. `@ConfigurationProperties` para config tipada.
+- HTTP com status coerente. Bean Validation (`@Valid`) quando o projeto valida na borda.
+- Springdoc para o contrato HTTP quando a API já o usa.
+- Spring Data JPA e migrações com Flyway ou Liquibase, conforme o repositório.
+- Spring Security e CORS no padrão já configurado. Não desligar segurança para teste passar.
+- SLF4J. Actuator quando o serviço já expõe métricas.
+- Java 17+. Spring Boot 3.x ou 4.x, conforme o projeto. Gradle ou Maven.
 
 ## JVM e performance
 
@@ -80,19 +57,16 @@ Projeto com módulos `domain`, `application` e `infrastructure`: siga a skill `c
 ## Boas práticas
 
 - **Imutabilidade**: `final` quando aplicável.
-- **Optional**: tipo de retorno para ausência; evitar em campos/parâmetros.
-- **Exceções**: unchecked para regras de negócio; tipadas — nunca `catch` genérico sem tratamento.
-- **SOLID**: alta coesão, baixo acoplamento.
-- Microservices e WebFlux quando o contexto exigir reatividade.
+- **Optional**: tipo de retorno para ausência. Evitar em campo ou parâmetro.
+- **Exceções**: tipadas. Sem `catch` genérico vazio.
+- **SOLID**: skill `solid-principles`, sem impor um formato de pasta.
 
 ## Testes
 
-- JUnit 5 + AssertJ; Spring Boot Test.
-- MockMvc para camada web.
-- `@SpringBootTest` integração; `@DataJpaTest` para repositories.
-- **Testcontainers** para banco/serviços reais — preferir a H2 in-memory.
+JUnit 5 no layout que o projeto já tem (`@SpringBootTest`, `@DataJpaTest`, MockMvc, Testcontainers, testes puros). Não introduza tags `unitTest` / `integrationTest` / `e2eTest` nem as bases `UnitTest`, `UseCaseTest`, `@ControllerTest`, `@PostgreSQLGatewayTest` e `@E2ETest` se elas não existirem. Essas bases estão na skill `java-test-layers`, no mesmo critério opt-in da Clean Architecture.
 
 ## Verificação
 
-- `./gradlew spotlessApply` ou `./mvnw spotless:apply`
-- `./gradlew test` ou `./mvnw test`
+- Formatação: `./gradlew spotlessApply` ou `./mvnw spotless:apply` quando o plugin existir.
+- Testes: a task que o build já expõe. Se existirem `unitTests`, `integrationTests` ou `e2eTests`, use a da camada alterada. Senão `./gradlew test` ou `./mvnw test`.
+- `ALL_TESTS_PASSED: true` só com exit code `0`.

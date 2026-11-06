@@ -1,6 +1,10 @@
 ---
 name: hexagonal-architecture
-description: Biblioteca de conhecimento sobre arquitetura hexagonal (Ports & Adapters).
+description: >-
+  Biblioteca de conhecimento sobre arquitetura hexagonal (Ports & Adapters).
+  Use ao desenhar portas, adapters ou a fronteira entre domínio e frameworks.
+  Em Java, a forma com módulos domain, application e infrastructure está na
+  skill clean-architecture e só vale se o repositório já a usa ou o usuário pedir.
 disable-model-invocation: true
 ---
 
@@ -25,3 +29,7 @@ A Arquitetura Hexagonal, ou arquitetura Ports and Adapters, busca criar componen
 - **Injeção de dependência**: Use DI para conectar adapters aos ports no ponto de entrada da aplicação (ex.: função main ou configuração do container DI).
 - **Testabilidade**: O núcleo da aplicação deve ser testável sem dependências externas, mockando ou stubando os ports de saída.
 - **Mapeamento**: Evite vazar entidades de domínio para o exterior. Mapeie DTOs externos para entidades de domínio nos adapters primários e entidades de domínio para modelos de banco ou payloads externos nos adapters secundários.
+
+## Java
+
+Se o serviço já usa Clean Architecture, ou o usuário pediu esse modelo, o port de entrada é o use case abstrato, o port de saída é o gateway no domínio e os adapters são controller e `*PostgreSQLGateway`. Siga `clean-architecture` e `java-test-layers`. Em outra arquitetura Java, mantenha a estrutura do repositório. Esta skill não a substitui.

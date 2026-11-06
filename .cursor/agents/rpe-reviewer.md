@@ -24,7 +24,7 @@ Aplicar checklist de `code-review.mdc`:
 - Performance (N+1, loops, memory leaks)
 - Legibilidade e complexidade
 - Testes e edge cases
-- Arquitetura e separação de concerns
+- Arquitetura e separação de concerns, contra o modelo que o repositório já usa. `clean-architecture` e `java-test-layers` só se esse for o modelo do projeto ou o usuário tiver pedido para adotá-lo
 
 ## Escopo
 

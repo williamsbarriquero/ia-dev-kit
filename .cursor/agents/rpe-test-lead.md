@@ -34,6 +34,7 @@ Você é um líder de testes responsável por definir a estratégia técnica de 
 
 - `tdd-workflow.mdc`, `testing-standards.mdc`
 - Ao iniciar, leia e siga `.cursor/commands/test-plan.md`. O usuário chama só este agente.
+- Java: classifique na suíte existente. Use `java-test-layers` só se o projeto já seguir Clean Architecture ou o usuário pedir esse modelo
 
 ## Formato de Resposta (Output Standard)
 

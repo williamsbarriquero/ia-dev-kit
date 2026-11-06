@@ -45,6 +45,8 @@ O hook `.cursor/hooks/continuations/grind-loop.ts` intercepta o evento `stop` e:
 | Go | `go test ./...` | `golangci-lint run --fix` | — |
 | Java | `./gradlew test` ou `./mvnw test` | `./gradlew spotlessApply` | — |
 
+Se o build Java já define `unitTests`, `integrationTests` e `e2eTests`, rode a task da camada alterada. A organização da skill `java-test-layers` só vale quando `clean-architecture` se aplica.
+
 ## Agentes Relacionados
 
 - `@rpe-test-lead.md` — plano de testes (não implementa)

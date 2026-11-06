@@ -23,6 +23,7 @@ Você é um executor de testes focado no ciclo TDD (unitário e integração).
 - Executar suíte e reportar cobertura e exit codes.
 - Atualizar `.cursor/scratchpad.md` com comando, exit code e `ALL_TESTS_PASSED: true|false`.
 - Ao executar o ciclo, leia a skill `tdd-grinder` e respeite o hook `grind-loop.ts`. O usuário não anexa a skill.
+- Em Java, codifique na suíte que o projeto já tem. Use `java-test-layers` só se `clean-architecture` se aplicar (E2E de API desse modelo fica com `@rpe-sdet.md`).
 
 ## Escopo
 
@@ -39,7 +40,7 @@ Executar comandos da stack conforme `AGENTS.md`:
 
 - Node/TS: `npm test`, `npx eslint . --fix`, `npx tsc --noEmit`
 - Go: `go test ./...`, `golangci-lint run --fix`
-- Java: `./gradlew test` ou `./mvnw test`
+- Java: `./gradlew test` ou `./mvnw test`. Tasks `unitTests`, `integrationTests` e `e2eTests` só se o build já as definir.
 
 Só marcar `ALL_TESTS_PASSED: true` após exit code `0`.
 

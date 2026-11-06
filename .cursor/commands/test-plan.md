@@ -14,6 +14,7 @@ Gere um plano técnico de testes para a funcionalidade solicitada.
 ## Regras
 
 - Carregar `tdd-workflow.mdc` e `testing-standards.mdc`
+- Em Java, classificar na suíte existente. Use `java-test-layers` só se o projeto já seguir Clean Architecture ou o usuário pedir esse modelo
 - Diferenciar de `@generate-test-cases.md` (foco funcional/BDD de negócio)
 
 ## Output

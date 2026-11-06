@@ -10,6 +10,7 @@ Fluxo completo e rigoroso para implementação orientada a testes.
 
 ## Instruções
 
+- **Java**: se o projeto já segue Clean Architecture ou o usuário pediu esse modelo, use a ordem da skill `java-test-layers`. Nos demais, o ciclo abaixo na suíte que o repositório já tem.
 - **Ciclo Red-Green-Refactor**:
   1. **RED**: Escrever o teste que falha para a funcionalidade desejada.
   2. **GREEN**: No mesmo chat, implementar o mínimo para o teste passar, sem editar o teste.

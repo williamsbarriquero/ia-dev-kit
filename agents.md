@@ -37,7 +37,7 @@ Substitua os placeholders após explorar o codebase (`package.json`, `go.mod`, `
 
 Descreva padrões, camadas e decisões que agentes devem respeitar ao implementar ou revisar código.
 
-_[PREENCHER: ex. hexagonal — domain → ports → use case → adapters; monólito modular; REST + eventos; etc.]_
+_[PREENCHER com a arquitetura deste repositório. Clean Architecture Java (skills clean-architecture e java-test-layers) só se o código já usar domain/application/infrastructure ou se a equipe pedir para adotar.]_
 
 **Artefatos do harness (não duplicar aqui o conteúdo técnico de stack):**
 
@@ -56,7 +56,8 @@ Limites de negócio, segurança e escopo que agentes não devem violar.
 - _[PREENCHER: ex. sem PII em logs, validação de input obrigatória, limites de SLA, módulos fora de escopo]_
 - Segredos: nunca hardcodar credenciais; hooks `secret-scanner.sh` e `write-file-guard.sh`
 - Shell/MCP: guards em `.cursor/hooks/guards/` bloqueiam comandos destrutivos
-- Conteúdo de stack: editar **somente** `.cursor/knowledge/stacks/<stack>.md` — não duplicar em rules/skills
+- Linguagem e runtime: editar `.cursor/knowledge/stacks/<stack>.md`
+- Clean Architecture Java é opt-in: skills `clean-architecture` e `java-test-layers` só quando o repositório já usa o modelo ou alguém pede para adotá-lo. Não copiar esse mapa para rules como padrão de todo Java
 
 **Referência — ia-dev-kit:** não sobrescrever `mcp.json` existente no install; validar com `./scripts/validate.sh` antes de concluir; UltraWork requer Bun (`grind-loop.ts`).
 

@@ -1,9 +1,13 @@
 ---
 name: e2e-testing
-description: Práticas avançadas para testes de interface E2E com Playwright e Cypress.
+description: >-
+  Práticas para testes de interface E2E com Playwright e Cypress. Use em fluxos
+  de UI. E2E de API Java com @E2ETest só quando o projeto já segue java-test-layers.
 disable-model-invocation: true
 ---
 # Automação de Testes E2E (Modern Web)
+
+E2E de API Java com `@E2ETest`, `MockDsl` e Testcontainers só quando o projeto já segue a skill `java-test-layers`. Nos demais serviços, use o E2E que o repositório já tem. Playwright e Cypress continuam para UI.
 
 ## Estratégias de Estabilidade (Anti-Flakiness)
 

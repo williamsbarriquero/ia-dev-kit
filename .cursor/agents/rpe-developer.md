@@ -35,7 +35,7 @@ Testes formais de regressão ficam com `@rpe-tester.md` e `@rpe-sdet.md`.
 ## Regras Aplicáveis
 
 - `coding-standards.mdc`, `testing-standards.mdc`, `safety-guardrails.mdc`
-- Ao implementar, leia a skill da stack (`java-mastery`, `go-mastery` ou `node-mastery`). Java com módulos `domain`, `application` e `infrastructure`: leia também `clean-architecture-ddd`. Ao fechar, siga `.cursor/commands/validate-stack.md`. O usuário não anexa essas skills.
+- Ao implementar, leia a skill da stack (`java-mastery`, `go-mastery` ou `node-mastery`). Siga a arquitetura do repositório. `clean-architecture`, `java-test-layers` e `clean-architecture-ddd` só se o projeto já usa esse modelo ou o usuário pedir para adotá-lo. Ao fechar, siga `.cursor/commands/validate-stack.md`. O usuário não anexa essas skills.
 
 ## Formato de Resposta (Output Standard)
 

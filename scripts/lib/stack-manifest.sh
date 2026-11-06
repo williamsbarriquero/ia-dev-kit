@@ -27,7 +27,7 @@ STACK_RULES_go=(go-standards.mdc)
 STACK_RULES_node=(node-standards.mdc typescript.mdc)
 STACK_RULES_react=(frontend-standards.mdc typescript.mdc)
 
-STACK_SKILLS_java=(java-mastery clean-architecture-ddd)
+STACK_SKILLS_java=(java-mastery clean-architecture java-test-layers clean-architecture-ddd)
 STACK_SKILLS_go=(go-mastery)
 STACK_SKILLS_node=(node-mastery)
 STACK_SKILLS_react=(frontend-mastery)

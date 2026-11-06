@@ -7,7 +7,7 @@ Conduza o desenho da feature. A spec aprovada é a fonte da verdade. A lista de 
 1. Ler `agents.md`. Se houver `_[PREENCHER]_`, preencher Stack, Arquitetura, Restrições e Verificação antes do desenho. O usuário não anexa esse arquivo.
 2. Analisar requisitos e constraints do usuário.
 3. Investigar o codebase (dependências, padrões existentes, pontos de integração).
-4. Consultar skills: `hexagonal-architecture`, `clean-architecture-ddd` (Java), `design-patterns`, `solid-principles`.
+4. Consultar skills: `hexagonal-architecture`, `design-patterns`, `solid-principles`. Em Java, consultar `clean-architecture`, `java-test-layers` e `clean-architecture-ddd` só se o repositório já usar `domain` / `application` / `infrastructure` ou o usuário pedir esse modelo. Caso contrário, planeje na arquitetura existente.
 5. Produzir o rascunho da spec, sem lista de tarefas:
    - Contexto, capacidades, componentes e interações
    - Contratos: interfaces, DTOs, erros

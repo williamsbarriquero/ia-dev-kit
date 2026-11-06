@@ -13,10 +13,10 @@ Define como o agente deve classificar e rotear tarefas antes da execução.
 Antes de iniciar qualquer tarefa, classifique internamente a intenção e siga o fluxo correspondente:
 
 - **`quick`**: Correções rápidas e refatorações pontuais. Forneça resposta direta e implemente.
-- **`deep`**: Implementação complexa ou novo módulo. Planejamento e specs primeiro. TDD em seguida, salvo se o usuário pedir implementação direta: aí `@rpe-developer.md` e só depois `@rpe-tester.md`.
+- **`deep`**: Implementação complexa ou novo módulo. Planejamento e specs primeiro. TDD em seguida, salvo se o usuário pedir implementação direta: aí `@rpe-developer.md` e só depois `@rpe-tester.md`. Em Java, carregar `java-mastery`. Carregar `clean-architecture`, `java-test-layers` e `clean-architecture-ddd` só se o repositório já usar esse modelo ou o usuário pedir para adotá-lo.
 - **`analysis`**: Investigação de código e debugging. Use ferramentas de leitura, visualização e busca extensivamente antes de intervir.
 - **`review`**: Revisão de PR ou código. Acione `@rpe-reviewer.md` ou `@review-pr.md`. Carregar `code-review.mdc` e `safety-guardrails.mdc`.
-- **`test`**: Criação/execução de testes. Acione fluxo TDD (`@rpe-test-lead.md` → `@rpe-tester.md`). Carregar `tdd-workflow.mdc`, `testing-standards.mdc` e skill `tdd-grinder`.
+- **`test`**: Criação/execução de testes. Acione fluxo TDD (`@rpe-test-lead.md` → `@rpe-tester.md`). Carregar `tdd-workflow.mdc`, `testing-standards.mdc` e skill `tdd-grinder`. Em Java, carregar `java-test-layers` só se o repositório já seguir Clean Architecture ou o usuário pedir esse modelo. Nos demais, use a suíte existente.
 - **`infra`**: Configuração de infra, CI/CD, Docker. Acione `@rpe-infra.md` e skills de stack (`node-mastery`, `go-mastery`, `java-mastery`).
 - **`ultrawork`**: Acionado se o usuário usar o prefixo `ultrawork:`, incluir a palavra `ultrawork`, invocar `@ultrawork.md` ou solicitar explicitamente. Ative `ultrawork.mdc` e o ciclo de auto-correção via `.cursor/hooks/continuations/grind-loop.ts` (até 5 iterações).
 
